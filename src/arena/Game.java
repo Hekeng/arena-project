@@ -2,7 +2,7 @@ package arena;
 
 public class Game {
 	public static void main(String[] args) {
-		System.out.println("TEST RUN V0.2");
+		System.out.println("TEST RUN V0.3");
 
 		Warrior warrior = new Warrior("Leonid",100,20);
 		Mage mage = new Mage("Vasiliy", 100, 40);
