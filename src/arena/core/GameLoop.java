@@ -3,9 +3,11 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import arena.characters.CharacterNotAliveException;
+import arena.characters.Character;
 import arena.characters.Mage;
 import arena.characters.Warrior;
 import arena.helpers.UnSlowPrinter;
+import arena.helpers.unSlow;
 import arena.helpers.unInputStr;
 import arena.helpers.unInputInt;
 import arena.ui.Menu;
@@ -37,8 +39,15 @@ public class GameLoop {
 			}
 
 			if (userAnswer == 1) {
+				if (List.size() < 2 ) {
 				Menu.menuChooseClass();
 				userAnswer = unInputInt.ZhalenInput(Scan);
+				} else {
+					System.out.println("You already have two fighters! You kan only start to fight! (menu 2)");
+					unSlow.slowFunc(250);
+					continue;
+					
+				}
 				System.out.println("Yours input was: " + userAnswer);
 			}
 
@@ -61,8 +70,9 @@ public class GameLoop {
 						Menu.menuEnterName();
 						continue;
 						} else {
+							
 							System.out.println("Input is inkorrect return to main menu" );
-							//Menu.menuEnterName();
+							unSlow.slowFunc(250);
 							continue;
 			}
 		}
