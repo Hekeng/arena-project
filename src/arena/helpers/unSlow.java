@@ -1,4 +1,4 @@
-package UniversalClasses;
+package arena.helpers;
 
 public class unSlow {
 	public static void slowFunc (int delayMilliseconds){

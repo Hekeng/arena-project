@@ -1,4 +1,4 @@
-package arena;
+package arena.characters;
 
 // Наследование от Exception делает это исключение "Проверяемым" (Checked)
 public class CharacterNotAliveException extends Exception {

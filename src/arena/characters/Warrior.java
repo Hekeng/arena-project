@@ -1,4 +1,4 @@
-package arena;
+package arena.characters;
 
 public class Warrior extends Character {
 	private int armor; // Новое, уникальное поле

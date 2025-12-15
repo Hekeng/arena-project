@@ -1,5 +1,9 @@
 package arena;
 
+import arena.characters.CharacterNotAliveException;
+import arena.characters.Mage;
+import arena.characters.Warrior;
+
 public class Game {
 	public static void main(String[] args) {
 		System.out.println("TEST RUN V0.3");

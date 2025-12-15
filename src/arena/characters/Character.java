@@ -1,4 +1,4 @@
-package arena;
+package arena.characters;
 
 public class Character {
 

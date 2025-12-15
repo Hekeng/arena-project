@@ -1,4 +1,4 @@
-package arena;
+package arena.helpers;
 
 import java.util.Scanner;
 
