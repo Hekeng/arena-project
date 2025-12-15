@@ -4,7 +4,7 @@ public final class MenuConfig {
 
 	private MenuConfig(){}// запрещаем создание объекта
 
-	public static final int MEIN_MENU_DELAY = 10;
+	public static final int MEIN_MENU_DELAY = 1;
 	public static final String MENU_GAP = "============================================";
 	public static final String[] MAIN_MENU = {
 		"=======Hello! Welcome to game Arena!========",
