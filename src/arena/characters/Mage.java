@@ -12,8 +12,7 @@ public class Mage extends Character{
 		this.mana = mana;
 	}
 
-	public int getMana(){
-		return this.mana;
+	public int getMana(){ return this.mana;
 	}
 
 	public boolean castSpell(int manaCost)
