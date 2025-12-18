@@ -19,16 +19,15 @@ public class unInputStr {
 			}
 			
 			//uberprufung chahlen
-			
-			for (int i = 0; i < analizAingabe.length(); i++) {
-				char currentC = analizAingabe.charAt(i);
-				if (java.lang.Character.isDigit(currentC)){
-					
-					System.out.println("Eingabe solen hat booschtaben nischt lear, bitte noch einmall ein");
-					checkPrufung = 0;
-					break;
-				}
-			}
+			checkPrufung = 1;
+//			for (int i = 0; i < analizAingabe.length(); i++) {
+//				char currentC = analizAingabe.charAt(i);
+//				if (java.lang.Character.isDigit(currentC)){
+//					System.out.println("Eingabe solen hat booschtaben nischt lear, bitte noch einmall ein");
+//					checkPrufung = 0;
+//					break;
+//				}
+//			}
 			
 			if (checkPrufung == 1) {
 				ifValid = 1;

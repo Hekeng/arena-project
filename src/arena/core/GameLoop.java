@@ -2,7 +2,7 @@ package arena.core;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-
+import arena.core.FightLoop;
 import arena.characters.Character;
 import arena.characters.Mage;
 import arena.characters.Warrior;
@@ -14,17 +14,17 @@ import arena.config.MenuConfig;
 import arena.config.FightMenuConfig;
 import arena.ui.Menu;
 public class GameLoop {
-	public static void main(String[] args) {
-		Scanner inputScanner = new Scanner(System.in);
-		ArrayList<Character> characterList = new ArrayList<>();// ВАЖНО ПЕРЕНЕСТИ!!!!
-		menuNav(inputScanner, characterList);
-		//Menu.menuStart();
-		//Menu.menuChooseClass();
-		//Menu.menuEnterName();
-
-
-		inputScanner.close();// ВАЖНО ПЕРЕНЕСТИ!!!!
-	}
+//	public static void main(String[] args) {
+//		Scanner inputScanner = new Scanner(System.in);
+//		ArrayList<Character> characterList = new ArrayList<>();// ВАЖНО ПЕРЕНЕСТИ!!!!
+//		menuNav(inputScanner, characterList);
+//		//Menu.menuStart();
+//		//Menu.menuChooseClass();
+//		//Menu.menuEnterName();
+//
+//
+//		inputScanner.close();// ВАЖНО ПЕРЕНЕСТИ!!!!
+//	}
 
 	public static void menuNav(Scanner scan, ArrayList<Character> list) {
 		while (true) {
@@ -34,6 +34,22 @@ public class GameLoop {
 			// 0. Exit
 			if (mainMenuChoice == MenuConfig.CLASS_ID_BACK) {
 				break;
+			}
+
+			// 2. Логика боя
+			if (mainMenuChoice == MenuConfig.START_FIGHT_ID) {
+				unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELEY);
+				if(quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)){
+					unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELEY);
+					System.out.println("You must have min 2 fighters, please create fighters!");
+					continue;
+				}
+//				else {
+//
+//					FightLoop.startFight(list);
+//
+//				}
+
 			}
 
 			// 1. Создание персонажа (переходим во вложенную логику)
@@ -51,7 +67,7 @@ public class GameLoop {
 				// Если выбрали конкретный класс
 				if (classChoice == MenuConfig.CLASS_ID_MAGE || classChoice == MenuConfig.CLASS_ID_WARRIOR) {
 					Menu.menuEnterName();
-					String characterName = unInputStr.StringInput(scan);
+					String characterName = characterNameValid(list, scan);
 					characterCreation(classChoice, characterName, list);
 				}
 			}
@@ -59,7 +75,7 @@ public class GameLoop {
 	}
 
 
-	public static int mainMenuValid(Scanner Scan, ArrayList<Character> List){
+	public static int mainMenuValid(Scanner Scan, ArrayList<Character> list){
 
 		int meinMenuUserAnswer ;
 
@@ -76,12 +92,12 @@ public class GameLoop {
 				continue;
 			}
 
-			if (!quantityFightersValid(List,FightMenuConfig.MAX_FIGHTERS_QUANTITY)) {
-				System.out.println("You already have two fighters! You kan only start to fight! (menu 2)");
-				Menu.menuStart();
-				System.out.println("Input please you choice ");
-				continue;
-			}
+//			if (!quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)) {
+//				System.out.println("You already have two fighters! You kan only start to fight! (menu 2)");
+//				Menu.menuStart();
+//				System.out.println("Input please you choice ");
+//				continue;
+//			}
 
 			return meinMenuUserAnswer;
 
@@ -113,25 +129,54 @@ public class GameLoop {
 		}
 		return true;
 	}
-	public static boolean quantityFightersValid (ArrayList<Character> List, int maxFighters){
-		if (List.size() >= maxFighters) {
+	public static boolean quantityFightersValid (ArrayList<Character> list, int minFighters){
+		if (list.size() >= minFighters) {
 			return false;
 		}
 		return true;
 	}
 
-	public static void characterCreation (int answer, String charName, ArrayList<Character> List){
+	public static void characterCreation (int answer, String charName, ArrayList<Character> list){
 		if (answer == 1){
 			System.out.println("You created Mage!" );
 			Mage mage = new Mage(charName, 100, 40);
-			List.add(mage);
+			list.add(mage);
 		}
 
 		if (answer == 2){
 			System.out.println("You created Warrior!" );
 			Warrior warrior = new Warrior(charName, 100, 20);
-			List.add(warrior);
+			list.add(warrior);
 		}
+	}
+//refactor class:
+	public static String characterNameValid (ArrayList<Character> list, Scanner scan){
+		//Check characterlist
+		while (true){
+			String analyzedInputName = scan.nextLine();
+		if (list.isEmpty()) {
+			System.out.println("Create first character:");
+			return analyzedInputName;
+		} else
+			{
+				boolean flag = false;
+				for (Character analyzedCharacter : list) {
+
+					String existedCharName = analyzedCharacter.getName();
+
+					if (existedCharName.equalsIgnoreCase(analyzedInputName)){
+						System.out.println("Character name is already exist, please try again!");
+						flag = true;
+						break;
+					}
+				}
+				if (!flag) {
+					return analyzedInputName;
+				}
+			}
+
+		}
+
 	}
 
 }

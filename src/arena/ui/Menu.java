@@ -17,6 +17,12 @@ public class Menu {
 		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_ENTER_NAME[0], MenuConfig.MEIN_MENU_DELAY);
 		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_GAP, MenuConfig.MEIN_MENU_DELAY);
 	}
+	public static void menuChowFighters(){
+		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_GAP, MenuConfig.MEIN_MENU_DELAY);
+		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_SHOW_FIGHTERS[0], MenuConfig.MEIN_MENU_DELAY);
+		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_GAP, MenuConfig.MEIN_MENU_DELAY);
+	}
+
 	public static void printMenu (String [] arr, String str){
 		for (int i = 0;  i < arr.length; i++) {
 			unSlow.slowFunc(MenuConfig.MEIN_MENU_DELAY);
@@ -33,4 +39,6 @@ public class Menu {
 		UnSlowPrinter.oneLetterPrint(str, MenuConfig.MEIN_MENU_DELAY);
 
 	}
+
+
 }

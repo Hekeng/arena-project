@@ -60,6 +60,26 @@ public class Character {
 		System.out.println(this.getName() + " has fallen.");
 	}
 
+	@Override
+	public String toString() {
+		// 1. Начинаем строку
+		String result = "Hero: " + name + "\n";
+
+		result = result + "Class: " + this.getClass().getSimpleName() + "\n";
+
+		// 2. Добавляем данные о здоровье
+		result = result + " | HP: " + health + "\n";
+
+		// 3. Добавляем статус
+		if (isAlive) {
+			result = result + " [Жив]" + "\n";
+		} else {
+			result = result + " [Мертв]" + "\n";
+		}
+
+		return result;
+	}
+
 }
 
 

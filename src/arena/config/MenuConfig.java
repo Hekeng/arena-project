@@ -38,4 +38,10 @@ public final class MenuConfig {
 		"=======Choose Your character Name!=========="
 	};
 
+	public static final String[] MENU_SHOW_FIGHTERS = {
+		"=======Fighters meet in the arena==========="
+	};
+
+
+
 }
