@@ -1,4 +1,5 @@
 package arena.ui;
+import arena.config.FightMenuConfig;
 import arena.config.MenuConfig;
 import arena.helpers.UnSlowPrinter;
 import arena.helpers.unSlow;
@@ -19,7 +20,7 @@ public class Menu {
 	}
 	public static void menuChowFighters(){
 		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_GAP, MenuConfig.MEIN_MENU_DELAY);
-		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_SHOW_FIGHTERS[0], MenuConfig.MEIN_MENU_DELAY);
+		UnSlowPrinter.oneLetterPrint(FightMenuConfig.MENU_SHOW_FIGHTERS[0], MenuConfig.MEIN_MENU_DELAY);
 		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_GAP, MenuConfig.MEIN_MENU_DELAY);
 	}
 
@@ -37,7 +38,6 @@ public class Menu {
 			}
 		}
 		UnSlowPrinter.oneLetterPrint(str, MenuConfig.MEIN_MENU_DELAY);
-
 	}
 
 

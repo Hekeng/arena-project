@@ -1,17 +1,22 @@
 package arena.core;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Random;
 
 import arena.characters.Character;
 import arena.characters.Mage;
 import arena.characters.Warrior;
+import arena.dialogs.BattleNarration;
 import arena.ui.Menu;
+import arena.helpers.UnSlowPrinter;
+import arena.helpers.clearConsole;
 
-import java.util.ArrayList;
+
 
 public class FightLoop {
 	public static void main(String[] args) {
 		ArrayList<Character> characterList = new ArrayList<>();
+		Random random = new Random();
 		Mage mage = new Mage("MageHexen", 100, 40);
 		Warrior warrior = new Warrior("WarriorHexen", 100, 20);
 		characterList.add(mage);
@@ -29,11 +34,16 @@ public class FightLoop {
 	}
 
 	public static void showFighters (ArrayList<Character> list){
-		Character fighter1 = list.get(0);
-		Character fighter2 = list.get(1);
-		System.out.println("fighter1: " + fighter1);
-		System.out.println("fighter2: " + fighter2);
-
+		
+		for (int i = 0; i < list.size(); i++) {
+			Character fighter  =  list.get(i);
+			UnSlowPrinter.oneLetterPrint(fighter.toString(), 10);
+		}
+		
+	}
+	
+	public static void diceThrow (String phrase){
+	
 	}
 
 }

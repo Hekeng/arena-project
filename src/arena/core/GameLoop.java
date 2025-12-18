@@ -38,9 +38,9 @@ public class GameLoop {
 
 			// 2. Логика боя
 			if (mainMenuChoice == MenuConfig.START_FIGHT_ID) {
-				unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELEY);
+				unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
 				if(quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)){
-					unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELEY);
+					unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
 					System.out.println("You must have min 2 fighters, please create fighters!");
 					continue;
 				}
@@ -59,7 +59,7 @@ public class GameLoop {
 
 				// Если в подменю выбрали "Назад"
 				if (classChoice == MenuConfig.CLASS_ID_BACK) {
-					unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELEY);
+					unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
 					System.out.println("Return to main menu");
 					continue;
 				}
@@ -85,7 +85,7 @@ public class GameLoop {
 			System.out.println("Yours input was: " + meinMenuUserAnswer);//test
 
 			if (!quantityPunktsMenuValid(meinMenuUserAnswer, MenuConfig.MAIN_MENU_PUNKTS_QUANTUTY)) {
-				unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELEY);
+				unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
 				System.out.println("Yours input: " + meinMenuUserAnswer + " is wrong please input only 0, 1, 2. ");
 				Menu.menuStart();
 				System.out.println("Input please you choice :");//test
@@ -112,7 +112,7 @@ public class GameLoop {
 			createCharacterMenuUserAnswer = unInputInt.ZhalenInput(Scan);
 
 			if (!quantityPunktsMenuValid(createCharacterMenuUserAnswer, MenuConfig.CHOOSE_CLASS_MENU_PUNKTS_QUANTUTY)) {
-				unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELEY);
+				unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
 				System.out.println("Yours input: " + createCharacterMenuUserAnswer + " is wrong please input only 0, 1, 2. ");
 				System.out.println("Input please you choice: ");//test
 				continue;

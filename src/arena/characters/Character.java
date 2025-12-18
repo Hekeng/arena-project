@@ -63,19 +63,19 @@ public class Character {
 	@Override
 	public String toString() {
 		// 1. Начинаем строку
-		String result = "Hero: " + name + "\n";
+		String result = "Hero: " + name + " | ";
 
-		result = result + "Class: " + this.getClass().getSimpleName() + "\n";
+		result = result + "Class: " + this.getClass().getSimpleName() + " | ";
 
 		// 2. Добавляем данные о здоровье
-		result = result + " | HP: " + health + "\n";
+		result = result + "Health: " + health + " | ";
 
 		// 3. Добавляем статус
-		if (isAlive) {
-			result = result + " [Жив]" + "\n";
-		} else {
-			result = result + " [Мертв]" + "\n";
-		}
+//		if (isAlive) {
+//			result = result + " [Жив]" + "\n";
+//		} else {
+//			result = result + " [Мертв]" + "\n";
+//		}
 
 		return result;
 	}

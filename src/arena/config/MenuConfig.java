@@ -5,8 +5,8 @@ public final class MenuConfig {
 	private MenuConfig(){}// запрещаем создание объекта
 
 	//DELAYS
-	public static final int MEIN_MENU_DELAY = 1;
-	public static final int OUTPUT_MENU_DELEY = 100;
+	public static final int MEIN_MENU_DELAY = 50;
+	public static final int OUTPUT_MENU_DELAY = 100;
 	public static final String MENU_GAP = "============================================";
 	public static final String[] MAIN_MENU = {
 		"=======Hello! Welcome to game Arena!========",
@@ -38,9 +38,7 @@ public final class MenuConfig {
 		"=======Choose Your character Name!=========="
 	};
 
-	public static final String[] MENU_SHOW_FIGHTERS = {
-		"=======Fighters meet in the arena==========="
-	};
+
 
 
 
