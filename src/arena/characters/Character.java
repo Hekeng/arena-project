@@ -1,20 +1,23 @@
 package arena.characters;
-
+//Первичный баланс цифрами
+//
+//		HP: Warrior 100, Mage 80
+//		Атака: Warrior 10–15, Mage 8–12
+//		Защита: Warrior 50% урон, Mage 100% урон (тратит Mana)
+//		Спешел: Warrior 2x урон (50 Rage), Mage +20 Mana или +15 HP (30 Mana)
+//     +Cooldown???
+//		Ресурс: Warrior Rage 0–100, Mage Mana 0–100, пассивное восстановление 5–10/ход
+//		Это даст сбалансированные по длине боя значения, чтобы бой длился 3–5 ходов, а спешел можно использовать 1–2 раза.
 public class Character {
-
-	// 1. Поля: Делаем их приватными!
 	private String name;
 	private int health;
 	private boolean isAlive = true;
 	
-	// Конструктор (оставляем как есть)
 	public Character(String name, int health) {
 		this.name = name;
 		this.health = health;
 	}
 
-	// 2. Геттер для имени (ЧТЕНИЕ)
-	// Возвращает тип поля (String)
 	public String getName(){
 		return this.name;
 	}
@@ -27,11 +30,7 @@ public class Character {
 		return this.isAlive;
 	}
 
-	// 3. Сеттер для здоровья (ЗАПИСЬ)
-	// Возвращаемый тип: void, так как метод ничего не возвращает, только меняет поле
 	public void setHealth(int health) {
-		// Мы используем 'this', чтобы различать поле класса (this.health)
-		// и аргумент метода (health).
 		this.health = health;
 	}
 
@@ -66,16 +65,13 @@ public class Character {
 		String result = "Hero: " + name + " | ";
 
 		result = result + "Class: " + this.getClass().getSimpleName() + " | ";
-
-		// 2. Добавляем данные о здоровье
 		result = result + "Health: " + health + " | ";
 
-		// 3. Добавляем статус
-//		if (isAlive) {
-//			result = result + " [Жив]" + "\n";
-//		} else {
-//			result = result + " [Мертв]" + "\n";
-//		}
+		if (isAlive) {
+			result = result + "Live" + " | \n";
+		} else {
+			result = result + "Dead" + " | \n";
+		}
 
 		return result;
 	}
