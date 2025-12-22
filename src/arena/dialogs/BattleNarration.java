@@ -7,7 +7,7 @@ public class BattleNarration {
 	public static final String [] FIRST_SCENA_DIALOGE = {
 		"The arena falls silent...\n",
 		"Two fighters look at each other.\n",
-		"Press [ENTER] to roll the dice..."
+		"The referee raises his hand — the crowd holds its breath. Time to roll the dice.\n"
 	};
 	
 //	Rolling the dice...

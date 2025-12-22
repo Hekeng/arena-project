@@ -1,12 +1,16 @@
 package arena.config;
 
+// TODO: handle tie animation
+// FIXME: remove hardcoded delay
+// NOTE: later replace with tournament logic
+
 public final class MenuConfig {
 
 	private MenuConfig(){}// запрещаем создание объекта
 
 	//DELAYS
-	public static final int MEIN_MENU_DELAY = 50;
-	public static final int OUTPUT_MENU_DELAY = 100;
+	public static final int MEIN_MENU_DELAY = 5;
+	public static final int OUTPUT_MENU_DELAY = 5;
 	public static final String MENU_GAP = "============================================";
 	public static final String[] MAIN_MENU = {
 		"=======Hello! Welcome to game Arena!========",
