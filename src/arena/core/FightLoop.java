@@ -18,6 +18,9 @@ import arena.core.scene.Narration;
 import arena.core.scene.FirstDiceThrowScene;
 
 import arena.logic.FightersDiceThrow;
+import arena.logic.BattleController;
+
+import arena.core.scene.SkillChoiseScene;
 
 
 import arena.dialogs.BattleNarration;
@@ -33,15 +36,19 @@ public class FightLoop {
 
 		Scanner inputScanner = new Scanner(System.in);
 		Mage mage = new Mage("MageHexen", 100, 40);
-		Warrior warrior = new Warrior("WarriorHexen", 100, 20);
+		Warrior warrior = new Warrior("WarriorHexen", 100, 0);
 		characterList.add(mage);
 		characterList.add(warrior);
 
-		startFight(characterList, inputScanner, fightOrder, myRand);
+		startFight(characterList, inputScanner, fightOrder
+				//, myRand
+		);
 		inputScanner.close();// ВАЖНО ПЕРЕНЕСТИ!!!!
 
 	}
-	public static boolean startFight(ArrayList<Character> list, Scanner scan, ArrayList<Character> order, Random rand){
+	public static boolean startFight(ArrayList<Character> list, Scanner scan, ArrayList<Character> order
+			//, Random rand
+	){
 		while (true){
 
 			Menu.menuChowFighters();
@@ -53,11 +60,22 @@ public class FightLoop {
 			Narration.NarrationIntro(BattleNarration.FIRST_SCENA_DIALOGE);
 
 			Pauses.waitForContinue(scan);
-
 			ClearConsole.clearConsole();
-			FirstDiceThrowScene.throwScene(list, order, rand);
-
-
+			
+			BattleController battle = new BattleController();
+			
+			FirstDiceThrowScene.throwScene(list, battle
+					//, rand
+			);
+			Pauses.waitForContinue(scan);
+			ClearConsole.clearConsole();
+			
+			int atkChoice =   SkillChoiseScene.skillChoose(battle.getAttacker(), scan);
+			
+			int defChoice =    SkillChoiseScene.skillChoose(battle.getDefender(), scan);
+			battle.executeRound(atkChoice, defChoice);
+			
+			
 			return true;
 		}
 	}
@@ -71,10 +89,10 @@ public class FightLoop {
 
 	}
 	
-	public static void diceThrow (String phrase){
-		if (phrase == null) {
-			
-		}
-	}
+//	public static void diceThrow (String phrase){
+//		if (phrase == null) {
+//
+//		}
+//	}
 
 }

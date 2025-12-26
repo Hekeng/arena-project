@@ -3,6 +3,9 @@ import arena.config.FightMenuConfig;
 import arena.config.MenuConfig;
 import arena.helpers.UnSlowPrinter;
 import arena.helpers.unSlow;
+
+import arena.characters.Character;
+
 public class Menu {
 
 	public static void menuStart() {
@@ -22,6 +25,11 @@ public class Menu {
 		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_GAP, MenuConfig.MEIN_MENU_DELAY);
 		UnSlowPrinter.oneLetterPrint(FightMenuConfig.MENU_SHOW_FIGHTERS[0], MenuConfig.MEIN_MENU_DELAY);
 		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_GAP, MenuConfig.MEIN_MENU_DELAY);
+	}
+	
+	public static void menuChooseSkill(String[] skillsMenu) {
+		// Получаем массив строк ПРЯМО из персонажа
+		printMenu(skillsMenu, MenuConfig.MENU_GAP);
 	}
 
 	public static void printMenu (String [] arr, String str){

@@ -1,4 +1,6 @@
 package arena.characters;
+
+import arena.logic.CombatIntent;
 //Первичный баланс цифрами
 //
 //		HP: Warrior 100, Mage 80
@@ -8,15 +10,19 @@ package arena.characters;
 //     +Cooldown???
 //		Ресурс: Warrior Rage 0–100, Mage Mana 0–100, пассивное восстановление 5–10/ход
 //		Это даст сбалансированные по длине боя значения, чтобы бой длился 3–5 ходов, а спешел можно использовать 1–2 раза.
-public class Character {
+public abstract class Character {
 	private String name;
 	private int health;
 	private boolean isAlive = true;
+	
+	//protected int attack;
 	
 	public Character(String name, int health) {
 		this.name = name;
 		this.health = health;
 	}
+	
+	
 
 	public String getName(){
 		return this.name;
@@ -37,8 +43,12 @@ public class Character {
 	public void setIsAlive(boolean isAlive){
 		this.isAlive = isAlive;
 	}
+	
+//	public void setAttack(int attack){
+//		this.attack = attack;
+//	}
 
-	public void damage(int amount) {
+	public void takeDamage(int amount) {
 
 		this.health = this.health - amount; // или this.health -= amount;
 
@@ -50,6 +60,7 @@ public class Character {
 		}
 		// Логика работы с полями объекта (например, this.health)
 	}
+	
 	public void die() {
 		// 1. Условие: если isAlive уже false (персонаж мертв)
 		if (this.health == 0 || this.isAlive == false) {
@@ -57,6 +68,25 @@ public class Character {
 		}
 		this.isAlive = false;
 		System.out.println(this.getName() + " has fallen.");
+	}
+	
+	public abstract CombatIntent attack();
+	public abstract CombatIntent defend();
+	public abstract CombatIntent special();
+	
+	public abstract void changeMyResource(int amount);
+	
+	protected abstract int resultDamage(int min, int max);
+	
+	public abstract String[] getMySkillMenu();
+	
+	public CombatIntent executeAction(int choice) {
+		switch (choice) {
+			case 1: return attack();
+			case 2: return defend();
+			case 3: return special();
+			default: return new CombatIntent(); // Пустой конверт, если что-то пошло не так
+		}
 	}
 
 	@Override

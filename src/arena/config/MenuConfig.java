@@ -41,9 +41,7 @@ public final class MenuConfig {
 	public static final String[] MENU_ENTER_NAME = {
 		"=======Choose Your character Name!=========="
 	};
-
-
-
+	
 
 
 }
