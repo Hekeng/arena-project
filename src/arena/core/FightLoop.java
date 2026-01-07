@@ -58,7 +58,7 @@ public class FightLoop {
 
 			Pauses.waitForContinue(scan);
 			ClearConsole.clearConsole();
-			Narration.NarrationIntro(BattleNarration.FIRST_SCENA_DIALOGE);
+			Narration.Narration(BattleNarration.FIRST_SCENA_DIALOGE);
 
 			Pauses.waitForContinue(scan);
 			ClearConsole.clearConsole();
@@ -70,8 +70,8 @@ public class FightLoop {
 			);
 			Pauses.waitForContinue(scan);
 			ClearConsole.clearConsole();
-			
-			BattleScene.battleScena(battle, scan);
+
+			Character champion = BattleScene.battleScena(battle, scan);
 			
 			
 			return true;

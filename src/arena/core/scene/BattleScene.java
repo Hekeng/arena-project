@@ -2,19 +2,38 @@ package arena.core.scene;
 
 import java.util.Scanner;
 
+import arena.characters.Character;
 import arena.logic.BattleController;
 import arena.logic.RoundResult;
+import arena.logic.Dice;
 
 import arena.ui.Menu;
 
 import arena.config.FightMenuConfig;
 
 import arena.helpers.ClearConsole;
+import arena.helpers.UnRand;
 
+import arena.dialogs.BattleNarration;
+
+import arena.core.scene.Narration;
 public class BattleScene {
 	
-	public static boolean battleScena(BattleController battle, Scanner scan){
+	public static Character battleScena(BattleController battle, Scanner scan){
+		boolean eventCooldown = false;
 		while (battle.getAttacker().getIsAlive() && battle.getDefender().getIsAlive()) {
+
+			//антураж боя
+			if (!eventCooldown && UnRand.randomNumber(1, 5) == 1) {
+				Pauses.waitForContinue(scan);
+				ClearConsole.clearConsole();
+				String [] event = BattleNarration.getRandomArenaEvent(battle.getAttacker(),battle.getDefender());
+				Menu.menuChooseSkill(event); // Твой метод вывода простого текста
+				eventCooldown = true;
+			} else {
+				eventCooldown = false; // Даем шанс на событие в следующем раунде
+			}
+
 			
 			int atkChoice = SkillChoiseScene.skillChoose(battle.getAttacker(), scan);
 			int defChoice = SkillChoiseScene.skillChoose(battle.getDefender(), scan);
@@ -26,13 +45,8 @@ public class BattleScene {
 			);
 			
 			Menu.menuChooseSkill(fightResultMessage);
-			
-			if (!battle.getDefender().getIsAlive()) {
-				System.out.println("VIN! " + battle.getAttacker().getName() + " crushed the enemy!");
-				break;
-			}
-			if (!battle.getAttacker().getIsAlive()) {
-				System.out.println("VIN! " + battle.getDefender().getName() + " crushed the enemy!");
+
+			if (!battle.getDefender().getIsAlive() || !battle.getAttacker().getIsAlive()) {
 				break;
 			}
 			
@@ -41,6 +55,9 @@ public class BattleScene {
 			 Pauses.waitForContinue(scan);
 			 ClearConsole.clearConsole();
 		}
-	return true;
+		Character winner = battle.getAttacker().getIsAlive() ? battle.getAttacker() : battle.getDefender();
+		Character loser = battle.getAttacker().getIsAlive() ? battle.getDefender() : battle.getAttacker();
+
+	return winner;
 	}
 }

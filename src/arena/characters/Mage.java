@@ -21,6 +21,16 @@ public class Mage extends Character{
 	public int getMana(){
 		return this.mana;
 	}
+	@Override
+	public int getResourceValue(){
+		 int resourceValue = getMana();
+		return resourceValue;
+	}
+	@Override
+	public String getResourceName(){
+		return "Mana";
+	}
+
 	
 	@Override
 	protected int resultDamage(int min, int max){
@@ -62,7 +72,7 @@ public class Mage extends Character{
 		intent.selfResourceChange -= FightClassesConfig.BASE_MAGE_SPELL_COST;
 		intent.message = "cast power schield";
 		} else {
-			intent.message = "Loschara ostalsia bez mani";
+			intent.message = "The loser was left without Mana";
 		}
 		return intent;
 	}
@@ -71,8 +81,7 @@ public class Mage extends Character{
 	public CombatIntent special() {
 		CombatIntent intent = new CombatIntent();
 		intent.selfResourceChange += 30;
-		
-		System.out.println(getName() + " consetrated energy and have mana");
+		intent.message = "concentrated energy and have mana";
 		return intent;
 	}
 	

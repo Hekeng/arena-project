@@ -28,32 +28,38 @@ public class BattleController {
 	}
 	
 	public RoundResult executeRound(int atkChoice, int defChoice) {
-		// 1. Получаем конверты от тех, кто сейчас в ролях
+		// Получаем конверты от тех, кто сейчас в ролях
 		CombatIntent intentAtk = this.attacker.executeAction(atkChoice);
 		CombatIntent intentDef = this.defender.executeAction(defChoice);
 		
-		// 2. Магия урона
+		// урон
 		int rawAttackerDmg = intentAtk.damageValue;
 		int damageToDef = (int) (rawAttackerDmg * intentDef.defenseMod);
 		int rawDefenderDmg = intentDef.damageValue;
 		int damageToAtk = (int) (rawDefenderDmg * intentAtk.defenseMod);
+
+		// ресурсы:
+
+		int atkResourceChange = intentAtk.selfResourceChange;
+		int defResourceChange = intentDef.selfResourceChange;
 		
 		boolean defResponded;
 		// 3. Применяем последствия
 		this.defender.takeDamage(damageToDef);
 		
 		if (defender.getIsAlive()) {
-			this.attacker.changeMyResource(intentAtk.selfResourceChange);
+			this.attacker.changeMyResource(atkResourceChange);
 			defResponded = true;
 			this.attacker.takeDamage(damageToAtk);
-			this.defender.changeMyResource(intentDef.selfResourceChange);
+			this.defender.changeMyResource(defResourceChange);
 		} else {
-			this.attacker.changeMyResource(intentAtk.selfResourceChange);
+			this.attacker.changeMyResource(atkResourceChange);
 			defResponded = false;
+			defResourceChange = 0;
 		}
 		
 		
-		return new RoundResult(intentAtk.message, rawAttackerDmg, damageToDef, intentDef.message, rawDefenderDmg, damageToAtk, defResponded);
+		return new RoundResult(intentAtk.message, rawAttackerDmg, damageToDef, atkResourceChange, intentDef.message, rawDefenderDmg, damageToAtk, defResourceChange, defResponded);
 	}
 
 		public void changeRolls() {

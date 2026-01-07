@@ -29,7 +29,20 @@ public class Warrior extends Character {
 		if (this.rage>100) this.rage = 100;
 
 	}
-	
+
+	public int getRage(){
+		return this.rage;
+	}
+	@Override
+	public int getResourceValue(){
+		int resourceValue = getRage();
+		return resourceValue;
+	}
+	@Override
+	public String getResourceName(){
+		return "Rage";
+	}
+
 	@Override
 	public CombatIntent attack() {
 		CombatIntent intent = new CombatIntent();
@@ -56,7 +69,7 @@ public class Warrior extends Character {
 		if (this.rage >= FightClassesConfig.BASE_WARRIOR_SKILL_COST) {
 			intent.damageValue =  resultDamage(FightClassesConfig.BASE_MIN_WARRIOR_DMG, FightClassesConfig.BASE_MAX_WARRIOR_DMG) * 2;
 			intent.message = "hit with the maximum force available to him";
-			intent.selfResourceChange = FightClassesConfig.BASE_WARRIOR_SKILL_COST;
+			intent.selfResourceChange -= FightClassesConfig.BASE_WARRIOR_SKILL_COST;
 		} else {
 			intent.selfResourceChange -= 10;
 			intent.message = "overexerted so much that couldn't lift the sword.";

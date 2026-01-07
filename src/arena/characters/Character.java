@@ -14,6 +14,8 @@ public abstract class Character {
 	private String name;
 	private int health;
 	private boolean isAlive = true;
+
+//	private int resource;
 	
 	//protected int attack;
 	
@@ -21,8 +23,7 @@ public abstract class Character {
 		this.name = name;
 		this.health = health;
 	}
-	
-	
+
 
 	public String getName(){
 		return this.name;
@@ -43,6 +44,8 @@ public abstract class Character {
 	public void setIsAlive(boolean isAlive){
 		this.isAlive = isAlive;
 	}
+
+
 	
 //	public void setAttack(int attack){
 //		this.attack = attack;
@@ -69,7 +72,14 @@ public abstract class Character {
 		this.isAlive = false;
 		System.out.println(this.getName() + " has fallen.");
 	}
-	
+
+	public abstract int getResourceValue();
+	public abstract String getResourceName();
+
+	public String getResourceStatus(){
+		return getResourceName() + ": " + getResourceValue();
+	}
+
 	public abstract CombatIntent attack();
 	public abstract CombatIntent defend();
 	public abstract CombatIntent special();
