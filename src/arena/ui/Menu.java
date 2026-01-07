@@ -16,6 +16,10 @@ public class Menu {
 		printMenu(MenuConfig.MENU_CHOOSE_CLASS, MenuConfig.MENU_GAP);
 	}
 	
+//	public static void printTurnResult (){
+//		printMenu(FightMenuConfig.getAfterRoundStatus(),
+//				MenuConfig.MENU_GAP);};
+	
 	public static void menuEnterName(){
 		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_GAP, MenuConfig.MEIN_MENU_DELAY);
 		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_ENTER_NAME[0], MenuConfig.MEIN_MENU_DELAY);
@@ -47,6 +51,6 @@ public class Menu {
 		}
 		UnSlowPrinter.oneLetterPrint(str, MenuConfig.MEIN_MENU_DELAY);
 	}
-
+	
 
 }

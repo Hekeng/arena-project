@@ -21,6 +21,7 @@ import arena.logic.FightersDiceThrow;
 import arena.logic.BattleController;
 
 import arena.core.scene.SkillChoiseScene;
+import arena.core.scene.BattleScene;
 
 
 import arena.dialogs.BattleNarration;
@@ -41,13 +42,13 @@ public class FightLoop {
 		characterList.add(warrior);
 
 		startFight(characterList, inputScanner, fightOrder
-				//, myRand
+
 		);
-		inputScanner.close();// ВАЖНО ПЕРЕНЕСТИ!!!!
+		inputScanner.close();
 
 	}
 	public static boolean startFight(ArrayList<Character> list, Scanner scan, ArrayList<Character> order
-			//, Random rand
+
 	){
 		while (true){
 
@@ -70,10 +71,7 @@ public class FightLoop {
 			Pauses.waitForContinue(scan);
 			ClearConsole.clearConsole();
 			
-			int atkChoice =   SkillChoiseScene.skillChoose(battle.getAttacker(), scan);
-			
-			int defChoice =    SkillChoiseScene.skillChoose(battle.getDefender(), scan);
-			battle.executeRound(atkChoice, defChoice);
+			BattleScene.battleScena(battle, scan);
 			
 			
 			return true;
@@ -89,10 +87,5 @@ public class FightLoop {
 
 	}
 	
-//	public static void diceThrow (String phrase){
-//		if (phrase == null) {
-//
-//		}
-//	}
 
 }

@@ -56,7 +56,7 @@ public abstract class Character {
 		if (this.health <= 0) {
 			this.health = 0;         // Гарантируем, что здоровье не станет отрицательным
 			this.isAlive = false;    // Меняем состояние напрямую
-			System.out.println(this.getName() + " has fallen.");
+			System.out.println(this.getName() + " has fallen.");//для тестов удалить когда закончу.
 		}
 		// Логика работы с полями объекта (например, this.health)
 	}
@@ -85,7 +85,7 @@ public abstract class Character {
 			case 1: return attack();
 			case 2: return defend();
 			case 3: return special();
-			default: return new CombatIntent(); // Пустой конверт, если что-то пошло не так
+			default: return new CombatIntent(); // Сделать свитч тут....
 		}
 	}
 
