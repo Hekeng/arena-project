@@ -15,6 +15,8 @@ public abstract class Character {
 	private int health;
 	private boolean isAlive = true;
 
+	private int winCount = 0;
+
 //	private int resource;
 	
 	//protected int attack;
@@ -37,6 +39,7 @@ public abstract class Character {
 		return this.isAlive;
 	}
 
+	public int getWinCount(){ return this.winCount; }
 	public void setHealth(int health) {
 		this.health = health;
 	}
@@ -45,11 +48,24 @@ public abstract class Character {
 		this.isAlive = isAlive;
 	}
 
-
+	public void addWin() {
+		this.winCount++;
+	}
 	
 //	public void setAttack(int attack){
 //		this.attack = attack;
 //	}
+
+	public String[] getPersonalInfo() {
+		return new String[]{
+				"NAME  : " + getName(),
+				"STATUS: " + getHealth() + " HP | " + getResourceStatus(),
+				"WINS  : " + getWinCount()
+		};
+	}
+
+	// Заглушка для истории (переопределим в Маге/Воине)
+	public abstract String[] getHistoryInfo();
 
 	public void takeDamage(int amount) {
 
@@ -89,6 +105,8 @@ public abstract class Character {
 	protected abstract int resultDamage(int min, int max);
 	
 	public abstract String[] getMySkillMenu();
+
+	public abstract String[] getClassDescription();
 	
 	public CombatIntent executeAction(int choice) {
 		switch (choice) {
@@ -98,7 +116,7 @@ public abstract class Character {
 			default: return new CombatIntent(); // Сделать свитч тут....
 		}
 	}
-
+// это костыль:
 	@Override
 	public String toString() {
 		// 1. Начинаем строку

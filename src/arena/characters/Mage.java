@@ -58,7 +58,7 @@ public class Mage extends Character{
 			intent.selfResourceChange -= FightClassesConfig.BASE_MAGE_SPELL_COST;
 			intent.message = "arson fireball and fiered in apponnent";
 		} else {intent.damageValue = 0;
-		intent.message = "Loschara ostalsia bez mani";}
+		intent.message = "The loser was left without Mana";}
 
 		return intent;
 	}
@@ -69,7 +69,7 @@ public class Mage extends Character{
 		CombatIntent intent = new CombatIntent();
 		if (this.mana >= FightClassesConfig.BASE_MAGE_SPELL_COST) {
 		intent.defenseMod = 0.1;
-		intent.selfResourceChange -= FightClassesConfig.BASE_MAGE_SPELL_COST;
+		intent.selfResourceChange -= FightClassesConfig.BASE_MAGE_SPELL_COST * 2;
 		intent.message = "cast power schield";
 		} else {
 			intent.message = "The loser was left without Mana";
@@ -80,7 +80,7 @@ public class Mage extends Character{
 	@Override
 	public CombatIntent special() {
 		CombatIntent intent = new CombatIntent();
-		intent.selfResourceChange += 30;
+		intent.selfResourceChange += FightClassesConfig.BASE_MAGE_SPELL_COST * 3;
 		intent.message = "concentrated energy and have mana";
 		return intent;
 	}
@@ -89,6 +89,30 @@ public class Mage extends Character{
 	public String[] getMySkillMenu() {
 		return FightMenuConfig.FIGHT_MENU_CHOOSE_MAGE_SKILL;
 	}
-	
+	@Override
+	public  String[] getClassDescription() {
+		return new String[]{
+				"ATTACK  : " + FightClassesConfig.BASE_MIN_MAGE_DMG + "-" + FightClassesConfig.BASE_MAX_MAGE_DMG + " DMG | " + FightClassesConfig.BASE_MAGE_SPELL_COST + " (" + getResourceName() + ")",
+				"BLOCK   : 90% DMG Reduction | +" + FightClassesConfig.BASE_MAGE_SPELL_COST * 2 + " " + getResourceName(),
+				"SPECIAL : Recharge Mana | Gives: " + FightClassesConfig.BASE_MAGE_SPELL_COST * 3 + " " + getResourceName(),
+				"FAIL  : If " + getResourceName() + " < " + FightClassesConfig.BASE_MAGE_SPELL_COST + " -> Action skipped",
+				"STAMINA : Averaged damage with high defense"
+		};
+	}
+
+
+	@Override
+	public String[] getHistoryInfo(){
+		return new String[]{
+				"A glass cannon capable of incinerating foes from afar.",
+				"The Mage relies on Mana to perform any action, including ",
+				"his incredibly powerful 'Power Shield' which negates ",
+				"90% of damage. However, magic is taxing; his mana",
+				" doesn't regenerate on its own. He must spend turns",
+				" concentrating to restore his energy, making timing and",
+				" resource management his key to victory."
+		};
+	}
+
 
 }

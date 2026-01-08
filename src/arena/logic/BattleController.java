@@ -55,7 +55,9 @@ public class BattleController {
 		} else {
 			this.attacker.changeMyResource(atkResourceChange);
 			defResponded = false;
+			damageToAtk = 0;
 			defResourceChange = 0;
+
 		}
 		
 		

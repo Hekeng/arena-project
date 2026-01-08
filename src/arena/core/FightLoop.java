@@ -22,6 +22,7 @@ import arena.logic.BattleController;
 
 import arena.core.scene.SkillChoiseScene;
 import arena.core.scene.BattleScene;
+import arena.core.scene.PostBattleScene;
 
 
 import arena.dialogs.BattleNarration;
@@ -36,8 +37,8 @@ public class FightLoop {
 		Random myRand = new Random();
 
 		Scanner inputScanner = new Scanner(System.in);
-		Mage mage = new Mage("MageHexen", 100, 40);
-		Warrior warrior = new Warrior("WarriorHexen", 100, 0);
+		Mage mage = new Mage("MageHexen", 10, 40);
+		Warrior warrior = new Warrior("WarriorHexen", 10, 0);
 		characterList.add(mage);
 		characterList.add(warrior);
 
@@ -54,30 +55,31 @@ public class FightLoop {
 
 			Menu.menuChowFighters();
 			System.out.println("\n");
-			showFighters(list);
-
+			showFighters(list);//костыль убрать
 			Pauses.waitForContinue(scan);
 			ClearConsole.clearConsole();
-			Narration.Narration(BattleNarration.FIRST_SCENA_DIALOGE);
 
+			Narration.Narration(BattleNarration.FIRST_SCENA_DIALOGE);//костыль убрать
 			Pauses.waitForContinue(scan);
 			ClearConsole.clearConsole();
 			
 			BattleController battle = new BattleController();
 			
-			FirstDiceThrowScene.throwScene(list, battle
-					//, rand
-			);
+			FirstDiceThrowScene.throwScene(list, battle);
 			Pauses.waitForContinue(scan);
 			ClearConsole.clearConsole();
 
-			Character champion = BattleScene.battleScena(battle, scan);
-			
+			BattleScene.battleScena(battle, scan);
+//			Pauses.waitForContinue(scan);
+//			ClearConsole.clearConsole();
+
+			PostBattleScene.postBattle(list, scan);
+
 			
 			return true;
 		}
 	}
-
+//костыль убрать:
 	public static void showFighters (ArrayList<Character> list){
 
 		for (int i = 0; i < list.size(); i++) {

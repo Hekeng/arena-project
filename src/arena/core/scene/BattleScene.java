@@ -19,16 +19,18 @@ import arena.dialogs.BattleNarration;
 import arena.core.scene.Narration;
 public class BattleScene {
 	
-	public static Character battleScena(BattleController battle, Scanner scan){
+	public static boolean battleScena(BattleController battle, Scanner scan){
 		boolean eventCooldown = false;
 		while (battle.getAttacker().getIsAlive() && battle.getDefender().getIsAlive()) {
 
 			//антураж боя
 			if (!eventCooldown && UnRand.randomNumber(1, 5) == 1) {
-				Pauses.waitForContinue(scan);
+
 				ClearConsole.clearConsole();
 				String [] event = BattleNarration.getRandomArenaEvent(battle.getAttacker(),battle.getDefender());
-				Menu.menuChooseSkill(event); // Твой метод вывода простого текста
+				Menu.menuChooseSkill(event);
+				Pauses.waitForContinue(scan);
+				ClearConsole.clearConsole();
 				eventCooldown = true;
 			} else {
 				eventCooldown = false; // Даем шанс на событие в следующем раунде
@@ -47,7 +49,7 @@ public class BattleScene {
 			Menu.menuChooseSkill(fightResultMessage);
 
 			if (!battle.getDefender().getIsAlive() || !battle.getAttacker().getIsAlive()) {
-				break;
+				return true;
 			}
 			
 			battle.changeRolls();
@@ -55,9 +57,9 @@ public class BattleScene {
 			 Pauses.waitForContinue(scan);
 			 ClearConsole.clearConsole();
 		}
-		Character winner = battle.getAttacker().getIsAlive() ? battle.getAttacker() : battle.getDefender();
-		Character loser = battle.getAttacker().getIsAlive() ? battle.getDefender() : battle.getAttacker();
+//		Character winner = battle.getAttacker().getIsAlive() ? battle.getAttacker() : battle.getDefender();
+//		Character loser = battle.getAttacker().getIsAlive() ? battle.getDefender() : battle.getAttacker();
 
-	return winner;
+	return true;
 	}
 }

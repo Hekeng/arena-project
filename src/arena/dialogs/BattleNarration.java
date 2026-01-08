@@ -47,11 +47,37 @@ public class BattleNarration {
 	}
 
 	public static final String[] BATTLE_FINALE = {
+			"=============== ARENA EVENT ================",
+			"============= VICTORY ACHIEVED =============",
 			"[... The dust settles over the arena sand ...]",
 			"The roar of the crowd fades into a tensed silence.",
 			"The referee approaches the fallen fighter and shakes his head..."
 	};
-	
+	// Тексты для панихиды (Loser)
+	public static final String[] DEATH_TRIBUTE = {
+			"=============== ARENA EVENT ================",
+			"============== REST IN PEACE ===============",
+			"The arena sand drinks the fallen warrior's blood...",
+			"Medics rush to the scene, carrying the defeated away.",
+			"Silence falls as the crowd acknowledges the loss."
+	};
+
+	// Тексты для поздравления (Winner)
+	public static final String[] VICTORY_SHOUTS = {
+			"=============== ARENA EVENT ================",
+			"============ VICTORY ACHIEVED ==============",
+			"The crowd erupts in a deafening roar!",
+			"The champion stands tall, bathed in golden light.",
+			"The legendary hero has claimed another soul for the Arena!"
+	};
+
+	// Тексты для лечения
+	public static final String[] RECOVERY_LOG = {
+			"=============== ARENA EVENT ================",
+			"============ RECOVERY AND REST =============",
+			"Priests of the Hexen Order bless the survivor.",
+			"Wounds are being tended, energy is being restored."
+	};
 //	Rolling the dice...
 //			.
 //			..

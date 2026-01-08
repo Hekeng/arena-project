@@ -47,7 +47,7 @@ public class Warrior extends Character {
 	public CombatIntent attack() {
 		CombatIntent intent = new CombatIntent();
 		intent.damageValue = resultDamage(FightClassesConfig.BASE_MIN_WARRIOR_DMG, FightClassesConfig.BASE_MAX_WARRIOR_DMG);
-		intent.selfResourceChange += 5;
+		intent.selfResourceChange += FightClassesConfig.MIN_WARRIOR_SKILL_COST;
 		intent.message = "tensed all muscles and hit";
 		return intent;
 			
@@ -57,8 +57,8 @@ public class Warrior extends Character {
 	@Override
 	public CombatIntent defend() {
 		CombatIntent intent = new CombatIntent();
-		intent.defenseMod = 0.5; // пример
-		intent.selfResourceChange +=10;
+		intent.defenseMod = 0.5;
+		intent.selfResourceChange += FightClassesConfig.MIN_WARRIOR_SKILL_COST * 2;
 		intent.message = "took a defensive stance";
 		return intent;
 	}
@@ -71,7 +71,7 @@ public class Warrior extends Character {
 			intent.message = "hit with the maximum force available to him";
 			intent.selfResourceChange -= FightClassesConfig.BASE_WARRIOR_SKILL_COST;
 		} else {
-			intent.selfResourceChange -= 10;
+			intent.selfResourceChange -= FightClassesConfig.MIN_WARRIOR_SKILL_COST * 2;;
 			intent.message = "overexerted so much that couldn't lift the sword.";
 			
 		}
@@ -83,4 +83,25 @@ public class Warrior extends Character {
 		return FightMenuConfig.FIGHT_MENU_CHOOSE_WARRIOR_SKILL;
 	}
 
+	@Override
+	public  String[] getClassDescription(){
+		return new String[] {
+				"ATTACK  : " + FightClassesConfig.BASE_MIN_WARRIOR_DMG + "-" + FightClassesConfig.BASE_MAX_WARRIOR_DMG + " DMG | " + FightClassesConfig.MIN_WARRIOR_SKILL_COST + " (" + getResourceName() + ")",
+				"BLOCK   : 50% DMG Reduction | +" + FightClassesConfig.MIN_WARRIOR_SKILL_COST * 2 + " " + getResourceName(),
+				"SPECIAL : Double Damage | Cost: " + FightClassesConfig.BASE_WARRIOR_SKILL_COST + " "+ getResourceName(),
+				"FAIL  : If " + getResourceName() + " < " + FightClassesConfig.BASE_WARRIOR_SKILL_COST + " -> -"+ FightClassesConfig.MIN_WARRIOR_SKILL_COST * 2 +" " + getResourceName() + " penalty",
+				"STAMINA : Consistent damage with high physical defense"
+		};
+	}
+	@Override
+	public String[] getHistoryInfo(){
+		return new String[]{
+				"A master of close combat who thrives in the heat ",
+				"of battle. The Warrior uses Rage as his primary fuel.",
+				" Every standard attack or defensive move builds up ",
+				"his adrenaline. Once he has enough, he can unleash ",
+				"a devastating blow that deals double damage. He is ",
+				"a tanky fighter who rewards aggressive play and steady momentum."
+		};
+	}
 }
