@@ -16,7 +16,7 @@ public class FightMenuConfig {
 	public static final int MIN_FIGHTERS_QUANTITY = 2;
 	
 	public static final String[] MENU_SHOW_FIGHTERS = {
-			"====== Fighters meet in the arena =========="
+		"====== Fighters meet in the arena =========="
 	};
 
 public static final String[] FIGHT_MENU_CHOOSE_MAGE_SKILL = {

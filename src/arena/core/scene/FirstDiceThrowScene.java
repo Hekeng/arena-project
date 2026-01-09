@@ -1,34 +1,28 @@
 package arena.core.scene;
 
 import arena.characters.Character;
-
-import java.util.ArrayList;
-
-import java.util.Random;
-
-import arena.helpers.UnRand;
-
 import arena.logic.BattleController;
 import arena.logic.FightersDiceThrow;
+import arena.ui.Menu;
+import arena.core.scene.Pauses;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class FirstDiceThrowScene {
+	
+	public static void throwScene(ArrayList<Character> list, BattleController battle, Scanner scan) {
+		
+		boolean isSuccess = false;
+		
+		while (!isSuccess) {
 
-	//fightersThrowsDice
-	public static void throwScene(ArrayList<Character> list, BattleController battle
-			//, Random rand
-	){
-		while(true){
-			int[] throwsResult = new int[list.size()];
-			throwsResult = FightersDiceThrow.twoFightersDiceThrow(list
-					//, rand
-			);
-			
-			if (!FightersDiceThrow.setRolls(list,  battle, throwsResult)) {
-				continue;
-			}
-			FightersDiceThrow.sayRolls(battle, throwsResult);
-			break;
+			isSuccess = FightersDiceThrow.tryToSetRolls(list, battle);
+
+			String[] report = FightersDiceThrow.prepareToSayRolls(battle);
+
+			Menu.printStandardFrame(report);
+
+			Pauses.waitForContinue(scan);
 		}
 	}
-	
 }

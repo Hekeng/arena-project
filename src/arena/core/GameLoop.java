@@ -2,14 +2,11 @@ package arena.core;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-import arena.core.FightLoop;
 import arena.characters.Character;
 import arena.characters.Mage;
 import arena.characters.Warrior;
-import arena.helpers.UnSlowPrinter;
 import arena.helpers.unSlow;
-import arena.helpers.unInputStr;
-import arena.helpers.unInputInt;
+import arena.helpers.UnInputInt;
 import arena.config.MenuConfig;
 import arena.config.FightMenuConfig;
 import arena.ui.Menu;
@@ -81,7 +78,7 @@ public class GameLoop {
 
 		do {
 
-			meinMenuUserAnswer = unInputInt.ZhalenInput(Scan);
+			meinMenuUserAnswer = UnInputInt.ZhalenInput(Scan);
 			System.out.println("Yours input was: " + meinMenuUserAnswer);//test
 
 			if (!quantityPunktsMenuValid(meinMenuUserAnswer, MenuConfig.MAIN_MENU_PUNKTS_QUANTUTY)) {
@@ -109,7 +106,7 @@ public class GameLoop {
 		int createCharacterMenuUserAnswer;
 
 		do{
-			createCharacterMenuUserAnswer = unInputInt.ZhalenInput(Scan);
+			createCharacterMenuUserAnswer = UnInputInt.ZhalenInput(Scan);
 
 			if (!quantityPunktsMenuValid(createCharacterMenuUserAnswer, MenuConfig.CHOOSE_CLASS_MENU_PUNKTS_QUANTUTY)) {
 				unSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);

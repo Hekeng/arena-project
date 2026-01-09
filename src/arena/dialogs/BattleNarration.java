@@ -11,17 +11,20 @@ public class BattleNarration {
 	private BattleNarration(){};
 	
 	public static final String [] FIRST_SCENA_DIALOGE = {
-		"The arena falls silent...\n",
-		"Two fighters look at each other.\n",
-		"The referee raises his hand — the crowd holds its breath. Time to roll the dice.\n"
+		"=============== ARENA EVENT ================",
+		"================== CROWD ===================",
+		"The arena falls silent...",
+		"Two fighters look at each other.",
+		"The referee raises his hand — the crowd holds",
+		" its breath. Time to roll the dice."
 	};
 
 	private static final String[] ARENA_PHRASES = {
-			"The crowd is chanting: 'Blood! Blood! Blood!'",
-			"A merchant in the front row is betting all his gold on the next strike!",
-			"The smell of sand and sweat fills the air. The audience holds its breath...",
-			"The Emperor leans forward, intrigued by this display of skill!",
-			"Somewhere in the stands, a child points at the heroes, dreaming of glory."
+		"The crowd is chanting: 'Blood! Blood! Blood!'",
+		"A merchant in the front row is betting all his gold on the next strike!",
+		"The smell of sand and sweat fills the air. The audience holds its breath...",
+		"The Emperor leans forward, intrigued by this display of skill!",
+		"Somewhere in the stands, a child points at the heroes, dreaming of glory."
 	};
 
 	public static String [] getRandomArenaEvent(Character atk, Character def) {

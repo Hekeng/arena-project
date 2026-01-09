@@ -9,18 +9,13 @@ import arena.characters.Warrior;
 
 import arena.ui.Menu;
 
-import arena.helpers.UnSlowPrinter;
 import arena.helpers.ClearConsole;
-import arena.helpers.UnRand;
 
 import arena.core.scene.Pauses;
-import arena.core.scene.Narration;
 import arena.core.scene.FirstDiceThrowScene;
 
-import arena.logic.FightersDiceThrow;
 import arena.logic.BattleController;
 
-import arena.core.scene.SkillChoiseScene;
 import arena.core.scene.BattleScene;
 import arena.core.scene.PostBattleScene;
 
@@ -42,9 +37,7 @@ public class FightLoop {
 		characterList.add(mage);
 		characterList.add(warrior);
 
-		startFight(characterList, inputScanner, fightOrder
-
-		);
+		startFight(characterList, inputScanner, fightOrder);
 		inputScanner.close();
 
 	}
@@ -53,26 +46,22 @@ public class FightLoop {
 	){
 		while (true){
 
-			Menu.menuChowFighters();
-			System.out.println("\n");
-			showFighters(list);//костыль убрать
-			Pauses.waitForContinue(scan);
+			Menu.showFighters(list, scan);
+
 			ClearConsole.clearConsole();
 
-			Narration.Narration(BattleNarration.FIRST_SCENA_DIALOGE);//костыль убрать
+			Menu.printStandardFrame(BattleNarration.FIRST_SCENA_DIALOGE);
 			Pauses.waitForContinue(scan);
 			ClearConsole.clearConsole();
 			
 			BattleController battle = new BattleController();
 			
-			FirstDiceThrowScene.throwScene(list, battle);
-			Pauses.waitForContinue(scan);
+			FirstDiceThrowScene.throwScene(list, battle, scan);
+			
 			ClearConsole.clearConsole();
 
 			BattleScene.battleScena(battle, scan);
-//			Pauses.waitForContinue(scan);
-//			ClearConsole.clearConsole();
-
+			
 			PostBattleScene.postBattle(list, scan);
 
 			
@@ -80,14 +69,7 @@ public class FightLoop {
 		}
 	}
 //костыль убрать:
-	public static void showFighters (ArrayList<Character> list){
 
-		for (int i = 0; i < list.size(); i++) {
-			Character fighter  =  list.get(i);
-			UnSlowPrinter.oneLetterPrint(fighter.toString(), 10);
-		}
-
-	}
 	
 
 }

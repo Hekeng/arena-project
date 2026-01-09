@@ -1,6 +1,9 @@
 package arena.characters;
-
+import java.io.Serializable;
 import arena.logic.CombatIntent;
+
+
+
 //Первичный баланс цифрами
 //
 //		HP: Warrior 100, Mage 80
@@ -10,7 +13,7 @@ import arena.logic.CombatIntent;
 //     +Cooldown???
 //		Ресурс: Warrior Rage 0–100, Mage Mana 0–100, пассивное восстановление 5–10/ход
 //		Это даст сбалансированные по длине боя значения, чтобы бой длился 3–5 ходов, а спешел можно использовать 1–2 раза.
-public abstract class Character {
+public abstract class Character implements Serializable {
 	private String name;
 	private int health;
 	private boolean isAlive = true;

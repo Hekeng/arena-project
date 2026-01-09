@@ -1,10 +1,20 @@
 package arena.ui;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import arena.config.FightMenuConfig;
 import arena.config.MenuConfig;
+
+import arena.core.scene.Pauses;
 import arena.helpers.UnSlowPrinter;
 import arena.helpers.unSlow;
 
+import arena.config.FightClassesConfig;
+
 import arena.characters.Character;
+
+
 
 public class Menu {
 
@@ -31,7 +41,19 @@ public class Menu {
 		UnSlowPrinter.oneLetterPrint(MenuConfig.MENU_GAP, MenuConfig.MEIN_MENU_DELAY);
 	}
 	
-	public static void menuChooseSkill(String[] skillsMenu) {
+	public static void showFighters (ArrayList<Character> list, Scanner scan){
+		
+		for (int i = 0; i < list.size(); i++) {
+			Character fighter  =  list.get(i);
+			//FightClassesConfig.buildHeroCard(fighter, 2);
+			Menu.printStandardFrame(FightClassesConfig.buildHeroCard(fighter, 2));
+			//UnSlowPrinter.oneLetterPrint(fighter.toString(), 10);
+			Pauses.waitForContinue(scan);
+			//ClearConsole.clearConsole();
+		}
+		
+	}
+	public static void printStandardFrame(String[] skillsMenu) {
 		// Получаем массив строк ПРЯМО из персонажа
 		printMenu(skillsMenu, MenuConfig.MENU_GAP);
 	}

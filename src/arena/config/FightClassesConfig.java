@@ -27,32 +27,32 @@ public class FightClassesConfig {
 	public static final int MIN_WARRIOR_SKILL_COST = 5;
 
 
-	public static String[] buildHeroCard(Character c, int mode) {
+	public static String[] buildHeroCard(Character fighter, int mode) {
 		List<String> allLines = new ArrayList<>();
 
 		switch (mode) {
 			case 1: // Выбор героя: История + Скиллы
 				allLines.add("=============== ARENA EVENT ================");
 				allLines.add("=============  YOUR CHAMPION ===============");
-				allLines.addAll(Arrays.asList(c.getHistoryInfo()));
+				allLines.addAll(Arrays.asList(fighter.getHistoryInfo()));
 				allLines.add("============================================");
-				allLines.addAll(Arrays.asList(c.getClassDescription()));
+				allLines.addAll(Arrays.asList(fighter.getClassDescription()));
 				break;
 
 			case 2: // Перед боем: Личное + Скиллы + История
-				allLines.add("=============== ARENA EVENT ================");
+				allLines.add("======= Fighters meet in the arena =========");
 				allLines.add("=============  YOUR CHAMPION ===============");
-				allLines.addAll(Arrays.asList(c.getPersonalInfo()));
+				allLines.addAll(Arrays.asList(fighter.getPersonalInfo()));
 				allLines.add("============================================");
-				allLines.addAll(Arrays.asList(c.getClassDescription()));
+				allLines.addAll(Arrays.asList(fighter.getClassDescription()));
 				allLines.add("============================================");
-				allLines.addAll(Arrays.asList(c.getHistoryInfo()));
+				allLines.addAll(Arrays.asList(fighter.getHistoryInfo()));
 				break;
 
 			case 3: // Только статы
 				allLines.add("=============== ARENA EVENT ================");
 				allLines.add("=============  YOUR CHAMPION ===============");
-				allLines.addAll(Arrays.asList(c.getPersonalInfo()));
+				allLines.addAll(Arrays.asList(fighter.getPersonalInfo()));
 				break;
 		}
 

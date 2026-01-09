@@ -1,11 +1,14 @@
 package arena.characters;
 
+import java.io.Serializable;
+
 import arena.config.FightClassesConfig;
 import arena.config.FightMenuConfig;
 import arena.helpers.UnRand;
 import arena.logic.CombatIntent;
 
-public class Warrior extends Character {
+
+public class Warrior extends Character implements Serializable {
 	private int rage; // Новое, уникальное поле
 
 	// Конструктор Warrior

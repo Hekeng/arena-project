@@ -1,31 +1,17 @@
 package arena.core.scene;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 import arena.characters.Character;
-import arena.characters.Mage;
-import arena.characters.Warrior;
 
 import arena.config.FightClassesConfig;
 
 import arena.ui.Menu;
 
-import arena.helpers.UnSlowPrinter;
 import arena.helpers.ClearConsole;
-import arena.helpers.UnRand;
 
-import arena.core.scene.Pauses;
-import arena.core.scene.Narration;
-import arena.core.scene.FirstDiceThrowScene;
-
-import arena.logic.FightersDiceThrow;
-import arena.logic.BattleController;
-
-import arena.core.scene.SkillChoiseScene;
-import arena.core.scene.BattleScene;
-import arena.core.scene.PostBattleScene;
+import arena.core.system.SaveManager;
 
 
 import arena.dialogs.BattleNarration;
@@ -45,17 +31,17 @@ public class PostBattleScene {
 		//Pauses.waitForContinue(scan);
 		// 2. Сцена смерти (Панихида)
 		ClearConsole.clearConsole();
-		Menu.menuChooseSkill(BattleNarration.DEATH_TRIBUTE);
+		Menu.printStandardFrame(BattleNarration.DEATH_TRIBUTE);
 		Pauses.waitForContinue(scan);
 
 		// 3. Сцена триумфа
 		ClearConsole.clearConsole();
 		winner.addWin(); // Прибавляем победу сразу
-		Menu.menuChooseSkill(BattleNarration.VICTORY_SHOUTS);
+		Menu.printStandardFrame(BattleNarration.VICTORY_SHOUTS);
 
 		// Показываем карточку победителя (наш режим 3 - только статы и имя)
 		String[] winnerCard = FightClassesConfig.buildHeroCard(winner, 3);
-		Menu.menuChooseSkill(winnerCard);
+		Menu.printStandardFrame(winnerCard);
 
 		Pauses.waitForContinue(scan);
 
@@ -66,11 +52,12 @@ public class PostBattleScene {
 
 
 		Narration.Narration(BattleNarration.RECOVERY_LOG);
-		System.out.println("\n======" + winner.getName() + " restored " + healAmount + " HP.======");
+		System.out.println("\n====== " + winner.getName() + " restored " + healAmount + " HP. ======");
+		SaveManager.saveCharacter(winner);
 		Pauses.waitForContinue(scan);
 
 		// 5. Сохранение (Тут будет вызов метода записи в файл)
-		// SaveSystem.saveHero(winner);
+		
 
 		// 6. Очистка списка (Удаляем мертвого, чтобы он не вернулся в меню)
 		list.remove(loser);

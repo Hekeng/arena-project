@@ -2,10 +2,8 @@ package arena.core.scene;
 
 import java.util.Scanner;
 
-import arena.characters.Character;
 import arena.logic.BattleController;
 import arena.logic.RoundResult;
-import arena.logic.Dice;
 
 import arena.ui.Menu;
 
@@ -16,7 +14,6 @@ import arena.helpers.UnRand;
 
 import arena.dialogs.BattleNarration;
 
-import arena.core.scene.Narration;
 public class BattleScene {
 	
 	public static boolean battleScena(BattleController battle, Scanner scan){
@@ -28,7 +25,7 @@ public class BattleScene {
 
 				ClearConsole.clearConsole();
 				String [] event = BattleNarration.getRandomArenaEvent(battle.getAttacker(),battle.getDefender());
-				Menu.menuChooseSkill(event);
+				Menu.printStandardFrame(event);
 				Pauses.waitForContinue(scan);
 				ClearConsole.clearConsole();
 				eventCooldown = true;
@@ -37,8 +34,8 @@ public class BattleScene {
 			}
 
 			
-			int atkChoice = SkillChoiseScene.skillChoose(battle.getAttacker(), scan);
-			int defChoice = SkillChoiseScene.skillChoose(battle.getDefender(), scan);
+			int atkChoice = SkillChoiceScene.skillChoose(battle.getAttacker(), scan);
+			int defChoice = SkillChoiceScene.skillChoose(battle.getDefender(), scan);
 			
 			RoundResult result = battle.executeRound(atkChoice, defChoice);
 			
@@ -46,9 +43,10 @@ public class BattleScene {
 					//battle.getAttacker(), result.attackMessage, battle.getDefender(), result.defMessage, result.damage
 			);
 			
-			Menu.menuChooseSkill(fightResultMessage);
+			Menu.printStandardFrame(fightResultMessage);
 
 			if (!battle.getDefender().getIsAlive() || !battle.getAttacker().getIsAlive()) {
+				Pauses.waitForContinue(scan);
 				return true;
 			}
 			
