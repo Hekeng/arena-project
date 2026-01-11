@@ -1,6 +1,6 @@
 package arena.helpers;
 
-public class unSlow {
+public class UnSlow {
 	public static void slowFunc (int delayMilliseconds){
 		try {
 			Thread.sleep(delayMilliseconds);

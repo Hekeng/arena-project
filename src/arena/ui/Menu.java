@@ -7,8 +7,8 @@ import arena.config.FightMenuConfig;
 import arena.config.MenuConfig;
 
 import arena.core.scene.Pauses;
+import arena.helpers.UnSlow;
 import arena.helpers.UnSlowPrinter;
-import arena.helpers.unSlow;
 
 import arena.config.FightClassesConfig;
 
@@ -59,8 +59,9 @@ public class Menu {
 	}
 
 	public static void printMenu (String [] arr, String str){
+		UnSlowPrinter.oneLetterPrint(str, MenuConfig.MEIN_MENU_DELAY);
 		for (int i = 0;  i < arr.length; i++) {
-			unSlow.slowFunc(MenuConfig.MEIN_MENU_DELAY);
+			UnSlow.slowFunc(MenuConfig.MEIN_MENU_DELAY);
 
 			if (i == 0 || i == 1) {
 				UnSlowPrinter.oneLetterPrint(arr[i], MenuConfig.MEIN_MENU_DELAY);

@@ -24,23 +24,23 @@ import arena.dialogs.BattleNarration;
 
 
 public class FightLoop {
-	public static void main(String[] args) {
-		ArrayList<Character> characterList = new ArrayList<>();
-
-		ArrayList<Character> fightOrder = new ArrayList<>();
-
-		Random myRand = new Random();
-
-		Scanner inputScanner = new Scanner(System.in);
-		Mage mage = new Mage("MageHexen", 10, 40);
-		Warrior warrior = new Warrior("WarriorHexen", 10, 0);
-		characterList.add(mage);
-		characterList.add(warrior);
-
-		startFight(characterList, inputScanner, fightOrder);
-		inputScanner.close();
-
-	}
+//	public static void main(String[] args) {
+//		ArrayList<Character> characterList = new ArrayList<>();
+//
+//		ArrayList<Character> fightOrder = new ArrayList<>();
+//
+//		Random myRand = new Random();
+//
+//		Scanner inputScanner = new Scanner(System.in);
+//		Mage mage = new Mage("MageHexen", 10, 40);
+//		Warrior warrior = new Warrior("WarriorHexen", 10, 0);
+//		characterList.add(mage);
+//		characterList.add(warrior);
+//
+//		startFight(characterList, inputScanner, fightOrder);
+//		inputScanner.close();
+//
+//	}
 	public static boolean startFight(ArrayList<Character> list, Scanner scan, ArrayList<Character> order
 
 	){

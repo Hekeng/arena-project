@@ -17,7 +17,7 @@ public class SkillChoiceScene {
 		Menu.printStandardFrame(character.getMySkillMenu());
 		System.out.println("=====Fighter: " + character.getName() + " do yours choose===");
 		System.out.println("============================================");
-		int answer = UnInputInt.ZhalenInput(inputScanner);
+		int answer = UnInputInt.numericInput(inputScanner);
 		ClearConsole.clearConsole();
 		return answer;
 

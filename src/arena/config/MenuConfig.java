@@ -12,21 +12,36 @@ public final class MenuConfig {
 	public static final int MEIN_MENU_DELAY = 5;
 	public static final int OUTPUT_MENU_DELAY = 5;
 	public static final String MENU_GAP = "============================================";
+	
 	public static final String[] MAIN_MENU = {
 		"====== Hello! Welcome to game Arena! =======",
 		"=================== MENU ===================",
-		"============ 1.Create Character ============",
-		"============ 2.Start Fight =================",
-		"============ 0.Exit ========================"
+		"======== 1.Create Character ================",
+		"======== 2.Start Fight =====================",
+		"======== 3.Return  =========================",
+		"======== 0.Return to Shadow ================"
 	};
+	public static final int START_FIGHT_ID = 2;
+	
+	
+	public static final String[] GAME_MODE_MENU = {
+		"====== Hello! Welcome to game Arena! =======",
+		"=================== MENU ===================",
+		"======== 1.Trial of Strength (VS AI) =======",
+		"======== 2.Duel of Heroes (PVP) ============",
+		"======== 0.Return to Shadow ================"
+	};
+	
 	public static final int CREATE_CHARACTER_ID = 1;
 
-	public static final int START_FIGHT_ID = 2;
+	
 
 	public static final int CLASS_ID_BACK = 0;
 
-	public static final int MAIN_MENU_PUNKTS_QUANTUTY =  MAIN_MENU.length - 2;
-
+	//public static final int MAIN_MENU_PUNKTS_QUANTUTY =  MAIN_MENU.length - 2;
+	
+	public static final int MENU_HEADER_SIZE = 2;
+	
 	public static final String[] MENU_CHOOSE_CLASS = {
 		"====== Choose Your character class! ========",
 		"=================== MENU ===================",

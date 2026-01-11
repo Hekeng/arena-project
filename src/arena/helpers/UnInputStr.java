@@ -2,7 +2,7 @@ package arena.helpers;
 
 import java.util.Scanner;
 
-public class unInputStr {
+public class UnInputStr {
 	public static String StringInput(Scanner inputScanner) {
 		
 		String analizAingabe = "";
