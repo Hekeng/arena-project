@@ -5,16 +5,19 @@ import arena.characters.Character;
 import java.io.*;
 
 public class SaveManager {
+	public static final String SAVE_PATH = "saves/";
 	public static void saveCharacter(Character winner) {
 		// 1. Сначала позаботимся о папке
-		File directory = new File("saves");
+		File directory = new File(SAVE_PATH);
 		if (!directory.exists()) {
 			directory.mkdir(); // Создаст папку, если её нет
 		}
 		
 		try {
 			// 2. Формируем красивое имя пути: "saves/Mage_Hexen.dat"
-			String fileName = "saves/" + winner.getClass().getSimpleName() + "_" + winner.getName() + ".dat";
+			String fileName = SAVE_PATH
+					//+ winner.getClass().getSimpleName() + "_"
+					+ winner.getName() + ".dat";
 			
 			FileOutputStream fileStream = new FileOutputStream(fileName);
 			ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);

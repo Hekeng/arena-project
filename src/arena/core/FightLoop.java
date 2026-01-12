@@ -41,7 +41,7 @@ public class FightLoop {
 //		inputScanner.close();
 //
 //	}
-	public static boolean startFight(ArrayList<Character> list, Scanner scan, ArrayList<Character> order
+	public static boolean startFight(ArrayList<Character> list, Scanner scan
 
 	){
 		while (true){

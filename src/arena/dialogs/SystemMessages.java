@@ -6,6 +6,46 @@ import java.util.List;
 public class SystemMessages {
 	private SystemMessages(){};
 	public static final String PRESS_ENTER = "====== Press [ENTER] to continue... ========";
+
+	public static final String[] ERR_NOT_A_NUMBER = {
+			"================== SYSTEM ==================",
+			"================== ERROR ===================",
+			"============= Incorrect input! =============",
+			"============= Please enter a NUMBER ========"
+	};
+
+	public static final String[] ERR_QUANTITY_FIGHTERS = {
+			"================== SYSTEM ==================",
+			"================== ERROR ===================",
+			"======= You must have min 2 fighters, ======",
+			"======= please create fighters! ============"
+	};
+
+	public static final String[] ERR_STRING_INPUT = {
+			"================== SYSTEM ==================",
+			"================== ERROR ===================",
+			"=== The input cannot be empty and must =====",
+			"=== contain only letters. Please try again ="
+	};
+
+	public static final String[] ERR_EMPTY_NAME ={
+			"================== SYSTEM ==================",
+			"================== ERROR ===================",
+			"=========== Name cannot be empty! ==========",
+			"=========== Please try again. =============="
+	};
+	public static final String[] ERR_NAME_EXIST = {
+			"================== SYSTEM ==================",
+			"================== ERROR ===================",
+			"===== Character name already exists! ======="
+	};
+
+	public static final String[] ERR_EMPTY_PARTY ={
+			"================== SYSTEM ==================",
+			"================== ERROR ===================",
+			"======= Characters are not created! ========"
+	};
+
 //	public static final String[] SYSTEM_MESSAGES = {
 //			"=======Press [ENTER] to continue...=========",
 //	};

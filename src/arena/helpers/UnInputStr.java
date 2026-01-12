@@ -2,6 +2,10 @@ package arena.helpers;
 
 import java.util.Scanner;
 
+import arena.ui.Menu;
+
+import arena.dialogs.SystemMessages;
+
 public class UnInputStr {
 	public static String StringInput(Scanner inputScanner) {
 		
@@ -13,22 +17,13 @@ public class UnInputStr {
 			analizAingabe = inputScanner.nextLine();
 			//uberprufung lear eingabe
 			if (analizAingabe.trim().isEmpty()) {
-				System.out.println("Eingabe solen hat booschtaben nischt lear, bitte noch einmall ein");
+				Menu.printStandardFrame(SystemMessages.ERR_STRING_INPUT);
 				ifValid = 0;
 				continue;
 			}
-			
-			//uberprufung chahlen
+
 			checkPrufung = 1;
-//			for (int i = 0; i < analizAingabe.length(); i++) {
-//				char currentC = analizAingabe.charAt(i);
-//				if (java.lang.Character.isDigit(currentC)){
-//					System.out.println("Eingabe solen hat booschtaben nischt lear, bitte noch einmall ein");
-//					checkPrufung = 0;
-//					break;
-//				}
-//			}
-			
+
 			if (checkPrufung == 1) {
 				ifValid = 1;
 			}
@@ -36,6 +31,6 @@ public class UnInputStr {
 			
 		} while (ifValid == 0);
 		
-		return analizAingabe;
+		return analizAingabe.trim();
 	}
 }

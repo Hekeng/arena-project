@@ -19,7 +19,7 @@ import arena.characters.Character;
 public class Menu {
 
 	public static void menuStart() {
-		printMenu(MenuConfig.MAIN_MENU, MenuConfig.MENU_GAP);
+		printMenu(MenuConfig.MENU_HUB_MENU, MenuConfig.MENU_GAP);
 	}
 	
 	public static void menuChooseClass(){

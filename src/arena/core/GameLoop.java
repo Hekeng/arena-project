@@ -6,8 +6,9 @@ import arena.characters.Character;
 import arena.characters.Mage;
 import arena.characters.Warrior;
 
+import arena.helpers.UnInputInt;
 import arena.helpers.UnSlow;
-import arena.logic.StartMenuValidation;
+import arena.logic.Validation;
 
 import arena.config.MenuConfig;
 import arena.config.FightMenuConfig;
@@ -33,15 +34,11 @@ public class GameLoop {
 			//, String[] menuArray
 	) {
 		while (true) {
-			
-			Menu.printStandardFrame(MenuConfig.GAME_MODE_MENU);
-			
-			//Menu.menuStart();
-			
-			int mainMenuChoice = StartMenuValidation.mainMenuValid(scan, MenuConfig.GAME_MODE_MENU
-					//, list
-			);
+			//ок
+			Menu.printStandardFrame(MenuConfig.MENU_START_MENU);
 
+			int mainMenuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_START_MENU);
+			//ок
 			// 0. Exit
 			if (mainMenuChoice == MenuConfig.CLASS_ID_BACK) {
 				break;
@@ -49,12 +46,13 @@ public class GameLoop {
 
 			// 2. Логика боя
 			if (mainMenuChoice == MenuConfig.START_FIGHT_ID) {
-				UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
-				if(StartMenuValidation.quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)){
-					UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
-					System.out.println("You must have min 2 fighters, please create fighters!");
-					continue;
-				}
+
+
+//				if(!Validation.quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)){
+//					UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
+//					System.out.println("You must have min 2 fighters, please create fighters!");
+//					continue;
+//				}
 //				else {
 //
 //					FightLoop.startFight(list);
@@ -66,7 +64,7 @@ public class GameLoop {
 			// 1. Создание персонажа (переходим во вложенную логику)
 			if (mainMenuChoice == MenuConfig.CREATE_CHARACTER_ID) {
 				Menu.menuChooseClass();
-				int classChoice = StartMenuValidation.chooseClassMenuValid(scan);
+				int classChoice = Validation.chooseClassMenuValid(scan);
 
 				// Если в подменю выбрали "Назад"
 				if (classChoice == MenuConfig.CLASS_ID_BACK) {
@@ -161,33 +159,6 @@ public class GameLoop {
 		}
 	}
 //refactor class:
-	public static String characterNameValid (ArrayList<Character> list, Scanner scan){
-		//Check characterlist
-		while (true){
-			String analyzedInputName = scan.nextLine();
-		if (list.isEmpty()) {
-			System.out.println("Create first character:");
-			return analyzedInputName;
-		} else
-			{
-				boolean flag = false;
-				for (Character analyzedCharacter : list) {
 
-					String existedCharName = analyzedCharacter.getName();
-
-					if (existedCharName.equalsIgnoreCase(analyzedInputName)){
-						System.out.println("Character name is already exist, please try again!");
-						flag = true;
-						break;
-					}
-				}
-				if (!flag) {
-					return analyzedInputName;
-				}
-			}
-
-		}
-
-	}
 
 }

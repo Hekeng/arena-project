@@ -14,8 +14,7 @@ public class UnInputInt {
 		
 		while (true) {
 			if (!inputScanner.hasNextInt()) {
-				// Ошибка 1: Это не число
-				Menu.printStandardFrame(new String[] {"ERROR", "Incorrect input!", "Please enter a NUMBER"});
+				Menu.printStandardFrame(SystemMessages.ERR_NOT_A_NUMBER);
 				inputScanner.nextLine();
 				continue;
 			}
@@ -23,8 +22,6 @@ public class UnInputInt {
 			analiseInput = inputScanner.nextInt();
 			
 			if (analiseInput < 0 || analiseInput > currentMenu.length - 1) {
-				// Ошибка 2: Число есть, но оно не из меню
-				// Вызываем твой метод, который вернет String[]
 				Menu.printStandardFrame(SystemMessages.failInputMessage(validOptions, analiseInput));
 				inputScanner.nextLine();
 				continue;
@@ -33,9 +30,16 @@ public class UnInputInt {
 			inputScanner.nextLine();
 			return analiseInput;
 		}
-		
-		
-		
+	}
+	public static int numericInput (Scanner inputScanner) {
+		int analizAingabe;
+		while (!inputScanner.hasNextInt()) {
+			System.out.println("Error: Incorrect input. Please try again ():");
+			inputScanner.nextLine(); // Вместо .next() используй .nextLine(), чтобы съесть ВЕСЬ неправильный ввод целиком с энтером
+		}
+		analizAingabe = inputScanner.nextInt();
+		inputScanner.nextLine(); // Чистим буфер после успешного ввода числа
+		return analizAingabe;
 	}
 	public static String [] menuSimplification(String[] currentMenu){
 		
@@ -56,17 +60,8 @@ public class UnInputInt {
 
 
 	}
-//	public class UnInputInt {
-//		public static int ZhalenInput(Scanner inputScanner) {
-//			int analizAingabe;
-//			while (!inputScanner.hasNextInt()) {
-//				System.out.println("Error: Incorrect input. Please try again ():");
-//				inputScanner.nextLine(); // Вместо .next() используй .nextLine(), чтобы съесть ВЕСЬ неправильный ввод целиком с энтером
-//			}
-//			analizAingabe = inputScanner.nextInt();
-//			inputScanner.nextLine(); // Чистим буфер после успешного ввода числа
-//			return analizAingabe;
-//		}
+
+
 
 
 
