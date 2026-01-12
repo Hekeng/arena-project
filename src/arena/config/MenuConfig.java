@@ -4,6 +4,14 @@ package arena.config;
 // FIXME: remove hardcoded delay
 // NOTE: later replace with tournament logic
 
+import arena.characters.Character;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import arena.core.system.LoadManager;
+
 public final class MenuConfig {
 
 	private MenuConfig(){}// запрещаем создание объекта
@@ -37,6 +45,20 @@ public final class MenuConfig {
 			"============ 2.Create Warrior ==============",
 			"============ 0.Back to previous menu ======="
 	};
+	
+	public static String[] buildHallOfFameMenu (){
+		List<String> allLines = new ArrayList<>();
+		allLines.add("========= Choose Your character ! ==========");
+		allLines.add("============== HALL OF FAME ================");
+		allLines.addAll(Arrays.asList(LoadManager.getSavedHeroesListDetailed()));
+		allLines.add("============ 0.Back to previous menu =======");
+		return allLines.toArray(new String[0]);
+	}
+	
+	public static final String[] MENU_HALL_OF_FAME = {
+			"========= Choose Your character ! ==========",
+			"============== HALL OF FAME ================"
+	};
 
 	public static final String[] MENU_CLASS_PREVIEW = {
 			"====== Do you confirm your choice? =========",
@@ -47,7 +69,7 @@ public final class MenuConfig {
 
 	public static final String[] MENU_ENTER_NAME = {
 			"====== Choose Your character Name! =========",
-			"=================== MENU ===================",
+			"=================== MENU ==================="
 	};
 	public static final int START_FIGHT_ID = 2;
 

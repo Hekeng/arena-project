@@ -25,27 +25,29 @@ public class GameLoop {
 		//Menu.menuStart();
 		//Menu.menuChooseClass();
 		//Menu.menuEnterName();
-
-
+		
+		
 		inputScanner.close();// ВАЖНО ПЕРЕНЕСТИ!!!!
 	}
-
+	
 	public static void menuNav(Scanner scan, ArrayList<Character> list
-			//, String[] menuArray
+	                           //, String[] menuArray
 	) {
 		while (true) {
 			//ок
 			Menu.printStandardFrame(MenuConfig.MENU_START_MENU);
-
+			
 			int mainMenuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_START_MENU);
 			//ок
 			// 0. Exit
 			if (mainMenuChoice == MenuConfig.CLASS_ID_BACK) {
 				break;
 			}
-
+		}
+	}
+}
 			// 2. Логика боя
-			if (mainMenuChoice == MenuConfig.START_FIGHT_ID) {
+//			/if (mainMenuChoice == MenuConfig.START_FIGHT_ID) {
 
 
 //				if(!Validation.quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)){
@@ -59,29 +61,29 @@ public class GameLoop {
 //
 //				}
 
-			}
+//			}
 
 			// 1. Создание персонажа (переходим во вложенную логику)
-			if (mainMenuChoice == MenuConfig.CREATE_CHARACTER_ID) {
-				Menu.menuChooseClass();
-				int classChoice = Validation.chooseClassMenuValid(scan);
-
-				// Если в подменю выбрали "Назад"
-				if (classChoice == MenuConfig.CLASS_ID_BACK) {
-					UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
-					System.out.println("Return to main menu");
-					continue;
-				}
-
-				// Если выбрали конкретный класс
-				if (classChoice == MenuConfig.CLASS_ID_MAGE || classChoice == MenuConfig.CLASS_ID_WARRIOR) {
-					Menu.menuEnterName();
-					String characterName = characterNameValid(list, scan);
-					characterCreation(classChoice, characterName, list);
-				}
-			}
-		}
-	}
+//			if (mainMenuChoice == MenuConfig.CREATE_CHARACTER_ID) {
+//				Menu.menuChooseClass();
+//				int classChoice = Validation.chooseClassMenuValid(scan);
+//
+//				// Если в подменю выбрали "Назад"
+//				if (classChoice == MenuConfig.CLASS_ID_BACK) {
+//					UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
+//					System.out.println("Return to main menu");
+//					continue;
+//				}
+//
+//				// Если выбрали конкретный класс
+//				if (classChoice == MenuConfig.CLASS_ID_MAGE || classChoice == MenuConfig.CLASS_ID_WARRIOR) {
+//					Menu.menuEnterName();
+//					String characterName = characterNameValid(list, scan);
+//					characterCreation(classChoice, characterName, list);
+//				}
+//			}
+//		}
+//	}
 
 
 //	public static int mainMenuValid(Scanner Scan, ArrayList<Character> list){
@@ -145,20 +147,20 @@ public class GameLoop {
 //		return true;
 //	}
 
-	public static void characterCreation (int answer, String charName, ArrayList<Character> list){
-		if (answer == 1){
-			System.out.println("You created Mage!" );
-			Mage mage = new Mage(charName, 100, 40);
-			list.add(mage);
-		}
-
-		if (answer == 2){
-			System.out.println("You created Warrior!" );
-			Warrior warrior = new Warrior(charName, 100, 20);
-			list.add(warrior);
-		}
-	}
+//	public static void characterCreation (int answer, String charName, ArrayList<Character> list){
+//		if (answer == 1){
+//			System.out.println("You created Mage!" );
+//			Mage mage = new Mage(charName, 100, 40);
+//			list.add(mage);
+//		}
+//
+//		if (answer == 2){
+//			System.out.println("You created Warrior!" );
+//			Warrior warrior = new Warrior(charName, 100, 20);
+//			list.add(warrior);
+//		}
+//	}
 //refactor class:
 
 
-}
+//}

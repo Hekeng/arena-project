@@ -9,6 +9,7 @@ import arena.characters.Mage;
 import arena.characters.Warrior;
 
 import arena.core.scene.Pauses;
+import arena.core.system.LoadManager;
 import arena.dialogs.SystemMessages;
 
 import arena.helpers.ClearConsole;
@@ -43,12 +44,10 @@ public class MainMenuNavigation {
 					break;
 				case 2:
 					iiFlag = false;
-
 					hubMenu(scan, list);
 					break;
 				case 0:
 					return;
-
 				default:
 					break;
 			}
@@ -65,7 +64,7 @@ public class MainMenuNavigation {
 					chooseClassMenu(scan, list);
 					break;
 				case 2:
-					//LOADMENU
+					loadMenu(scan, list);
 					break;
 				case 3:
 					if (list.isEmpty()) {
@@ -73,15 +72,16 @@ public class MainMenuNavigation {
 						continue;
 						} else {
 						for (Character c : list) {
+							ClearConsole.clearConsole();
 							Menu.printStandardFrame(FightClassesConfig.buildHeroCard(c, 2));
+							Pauses.waitForContinue(scan);
 						}
-						Pauses.waitForContinue(scan);
 					}
 					break;
 				case 9:
 					if (Validation.quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)) {
 						FightLoop.startFight(list, scan);
-						break;
+						return;
 					} else {
 						Menu.printStandardFrame(SystemMessages.ERR_QUANTITY_FIGHTERS);
 						break;
@@ -149,6 +149,31 @@ public class MainMenuNavigation {
 			String charName = Validation.characterNameValid(list, scan);
 			CreateCharacters.CreateCharacter(classChoice, charName, list);
 
+	}
+	
+	public static void loadMenu (Scanner scan, ArrayList<Character> list){
+		ClearConsole.clearConsole();
+		if (list.size() < FightMenuConfig.MIN_FIGHTERS_QUANTITY) {
+			Menu.printStandardFrame(MenuConfig.buildHallOfFameMenu());
+			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.buildHallOfFameMenu());
+			if (menuChoice == 0) {
+				return;
+			}
+			Character newHero = LoadManager.loadCharacter(menuChoice);
+			if (newHero!= null){
+				list.add(newHero);
+				System.out.println("Hero " +  newHero.getName() + " joined the party!");
+				Pauses.waitForContinue(scan);
+			} else {
+				System.out.println("something went wrong!!!");
+				Pauses.waitForContinue(scan);
+			}
+			
+		} else {
+			return;
+		}
+		
+		
 	}
 
 

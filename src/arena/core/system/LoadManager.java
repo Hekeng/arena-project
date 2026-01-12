@@ -1,49 +1,66 @@
 package arena.core.system;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import arena.characters.Character;
+import arena.config.SystemConfig;
+
 public class LoadManager {
-	public static Character loadCharacter(String filePath) {
-		try {
-			FileInputStream fileStream = new FileInputStream(filePath);
-			ObjectInputStream objectStream = new ObjectInputStream(fileStream);
-
-			// Читаем объект и принудительно приводим его к типу Character
-			Character loadedCharacter = (Character) objectStream.readObject();
-
-			objectStream.close();
-			fileStream.close();
-
-			System.out.println("====== Fighter " + loadedCharacter.getName() + " loaded successfully ======");
-			return loadedCharacter;
-
-		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("[Error]: Failed to load character! " + e.getMessage());
-			return null; // Если ошибка, возвращаем пустоту
+	private static File[] getOnlyDatFiles() {
+		File directory = new File(SystemConfig.SAVE_PATH);
+		File[] allFiles = directory.listFiles();
+		
+		if (allFiles == null) return new File[0];
+		
+		List<File> filteredList = new ArrayList<>();
+		for (File f : allFiles) {
+			if (f.isFile() && f.getName().endsWith(".dat")) {
+				filteredList.add(f);
+			}
 		}
+		return filteredList.toArray(new File[0]);
 	}
-	public static String[] getSavedFightersList() {
-		File directory = new File("saves");
-
-		// Проверяем, существует ли папка
-		if (!directory.exists() || !directory.isDirectory()) {
-			return new String[0]; // Возвращаем пустой массив, если папки нет
+	
+	public static String[] getSavedHeroesListDetailed() {
+		ArrayList<String> menuRows = new ArrayList<>();
+		File[] files = getOnlyDatFiles(); // Используем наш новый метод
+		
+		for (File currentFile : files) {
+			try {
+				FileInputStream fileStream = new FileInputStream(currentFile);
+				ObjectInputStream objectStream = new ObjectInputStream(fileStream);
+				Character hero = (Character) objectStream.readObject();
+				
+				// Твоя строка со String.join
+				String info = (menuRows.size() + 1) + ") " + String.join(" | ", hero.getPersonalInfo());
+				menuRows.add(info);
+				
+				objectStream.close();
+			} catch (Exception e) {
+				System.out.println("Could not read file: " + currentFile.getName());
+			}
 		}
-
-		// Получаем список всех файлов, заканчивающихся на .dat
-		File[] files = directory.listFiles((dir, name) -> name.endsWith(".dat"));
-
-		if (files == null || files.length == 0) {
-			return new String[0];
+		return menuRows.toArray(new String[0]);
+	}
+	
+	public static Character loadCharacter(int choice) {
+		File[] files = getOnlyDatFiles(); // Используем ТОТ ЖЕ самый список
+		
+		if (choice <= 0 || choice > files.length) return null;
+		
+		File currentFile = files[choice - 1];
+		Character hero = null;
+		
+		try {
+			FileInputStream fileStream = new FileInputStream(currentFile);
+			ObjectInputStream objectStream = new ObjectInputStream(fileStream);
+			hero = (Character) objectStream.readObject();
+			objectStream.close();
+		} catch (Exception e) {
+			System.out.println("Error loading character from: " + currentFile.getName());
 		}
-
-		// Создаем массив строк для имен файлов
-		String[] fileNames = new String[files.length];
-		for (int i = 0; i < files.length; i++) {
-			fileNames[i] = files[i].getName(); // Например: "Mage_Hexen.dat"
-		}
-
-		return fileNames;
+		return hero;
 	}
 }

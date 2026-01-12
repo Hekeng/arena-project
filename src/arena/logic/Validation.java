@@ -9,6 +9,8 @@ import arena.helpers.UnInputStr;
 import arena.helpers.UnSlow;
 import arena.ui.Menu;
 
+import arena.config.SystemConfig;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -72,9 +74,9 @@ public class Validation {
 	
 	public static boolean quantityFightersValid (ArrayList<Character> list, int minFighters){
 		if (list.size() >= minFighters) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	public static String characterNameValid (ArrayList<Character> list, Scanner scan) {
@@ -110,7 +112,7 @@ public class Validation {
 	}
 	public static boolean isNameTaken(String inputName) {
 		// 1. Формируем путь к потенциальному файлу (только имя + расширение)
-		String filePath = SaveManager.SAVE_PATH + inputName + ".dat";
+		String filePath = SystemConfig.SAVE_PATH + inputName + ".dat";
 		File file = new File(filePath);
 		return file.exists();
 	}
