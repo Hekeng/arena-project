@@ -46,6 +46,13 @@ public class BattleController {
 		boolean defResponded;
 		// 3. Применяем последствия
 		this.defender.takeDamage(damageToDef);
+
+		if (intentAtk.dotDamage > 0) {
+			this.defender.addPoison(intentAtk.dotDamage);
+		}
+		if (intentDef.dotDamage > 0) {
+			this.attacker.addPoison(intentDef.dotDamage);
+		}
 		
 		if (defender.getIsAlive()) {
 			this.attacker.changeMyResource(atkResourceChange);
@@ -59,9 +66,16 @@ public class BattleController {
 			defResourceChange = 0;
 
 		}
+		if (this.defender.getIsAlive() && this.defender.getPoisonValue() > 0) {
+			this.defender.takeDamage(this.defender.getPoisonValue());
+		}
+		if (this.attacker.getIsAlive() && this.attacker.getPoisonValue() > 0) {
+			this.attacker.takeDamage(this.attacker.getPoisonValue());
+		}
+		int atkPoisonDmg = this.attacker.getPoisonValue();
+		int defPoisonDmg = this.defender.getPoisonValue();
 		
-		
-		return new RoundResult(intentAtk.message, rawAttackerDmg, damageToDef, atkResourceChange, intentDef.message, rawDefenderDmg, damageToAtk, defResourceChange, defResponded);
+		return new RoundResult(intentAtk.message, rawAttackerDmg, damageToDef, atkResourceChange, atkPoisonDmg, intentDef.message, rawDefenderDmg, damageToAtk, defResourceChange, defPoisonDmg, defResponded);
 	}
 
 		public void changeRolls() {

@@ -9,41 +9,45 @@ import arena.dialogs.SystemMessages;
 public class UnInputInt {
 	public static int numericInput(Scanner inputScanner, String[] currentMenu) {
 		int analiseInput;
-		
-		String [] validOptions = menuSimplification(currentMenu);
-		
+		String[] validOptions = menuSimplification(currentMenu);
+
 		while (true) {
 			if (!inputScanner.hasNextInt()) {
 				Menu.printStandardFrame(SystemMessages.ERR_NOT_A_NUMBER);
 				inputScanner.nextLine();
 				continue;
 			}
-			
+
 			analiseInput = inputScanner.nextInt();
-			
-			if (analiseInput < 0 || analiseInput > currentMenu.length - 1) {
+			String inputStr = String.valueOf(analiseInput);
+			boolean isFound = false;
+			for (String s : validOptions) {
+				if (s != null && s.equals(inputStr)) {
+					isFound = true;
+					break;
+				}
+			}
+			if (isFound) {
+				inputScanner.nextLine();
+				return analiseInput;
+			} else {
 				Menu.printStandardFrame(SystemMessages.failInputMessage(validOptions, analiseInput));
 				inputScanner.nextLine();
-				continue;
 			}
-			
-			inputScanner.nextLine();
-			return analiseInput;
 		}
 	}
 	public static int numericInput (Scanner inputScanner) {
 		int analizAingabe;
 		while (!inputScanner.hasNextInt()) {
 			System.out.println("Error: Incorrect input. Please try again ():");
-			inputScanner.nextLine(); // Вместо .next() используй .nextLine(), чтобы съесть ВЕСЬ неправильный ввод целиком с энтером
+			inputScanner.nextLine();
 		}
 		analizAingabe = inputScanner.nextInt();
-		inputScanner.nextLine(); // Чистим буфер после успешного ввода числа
+		inputScanner.nextLine();
 		return analizAingabe;
 	}
 	public static String [] menuSimplification(String[] currentMenu){
-		
-//		int analiseQuantity = currentMenu.length - 2;
+
 		String[] validOptions = new String [currentMenu.length - 2];
 		int count = 0;
 		for (int i = 2; i < currentMenu.length; i++) {

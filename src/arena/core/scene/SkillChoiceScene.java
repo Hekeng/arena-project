@@ -15,7 +15,7 @@ public class SkillChoiceScene {
 	public static int skillChoose(Character character, Scanner inputScanner) {
 		
 		Menu.printStandardFrame(character.getMySkillMenu());
-		System.out.println("=====Fighter: " + character.getName() + " do yours choose===");//refactor
+		System.out.println("==== Fighter: " + character.getName() + " do yours choose ===");//refactor
 		System.out.println("============================================");//refactor
 		int answer = UnInputInt.numericInput(inputScanner);
 		ClearConsole.clearConsole();

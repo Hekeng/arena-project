@@ -46,6 +46,17 @@ public class SystemMessages {
 			"======= Characters are not created! ========"
 	};
 
+	public static final String[] ERR_CHAR_EXIST ={
+			"================== SYSTEM ==================",
+			"================== ERROR ===================",
+			"====== Character is already exists! ========"
+	};
+	public static final String[] ERR_PARTY_FULL ={
+			"================== SYSTEM ==================",
+			"================== ERROR ===================",
+			"============== Party is full! =============="
+	};
+
 //	public static final String[] SYSTEM_MESSAGES = {
 //			"=======Press [ENTER] to continue...=========",
 //	};

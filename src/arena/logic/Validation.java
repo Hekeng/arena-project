@@ -79,37 +79,64 @@ public class Validation {
 		return false;
 	}
 
-	public static String characterNameValid (ArrayList<Character> list, Scanner scan) {
-		while (true) {
-			String analyzedInputName = UnInputStr.StringInput(scan);
-			boolean flag = false;
-
-			if (analyzedInputName.isEmpty()) {
-				Menu.printStandardFrame(SystemMessages.ERR_EMPTY_NAME);
-				continue;
-			}
-			// 1. Проверяем в текущей сессии (в списке list)
-			for (Character analyzedCharacter : list) {
-				if (analyzedCharacter.getName().equalsIgnoreCase(analyzedInputName)) {
-					Menu.printStandardFrame(SystemMessages.ERR_NAME_EXIST);
-					flag = true;
-					break;
-				}
-			}
-
-			// Если нашли в списке — идем на новый круг ввода
-			if (flag) continue;
-
-			// 2. Проверяем на диске (в папке saves)
-			if (isNameTaken(analyzedInputName)) {
-				Menu.printStandardFrame(SystemMessages.ERR_NAME_EXIST);
-				continue; // Имя занято на диске — на новый круг
-			}
-
-			// Если прошли обе проверки — только тогда возвращаем имя
-			return analyzedInputName;
+	public static boolean characterNameValid(ArrayList<Character> list, String name) {
+		if (name.trim().isEmpty()) {
+			Menu.printStandardFrame(SystemMessages.ERR_EMPTY_NAME);
+			return false;
 		}
+
+		if (isNameInParty(list, name) || isNameOnDisk(name)) {
+			Menu.printStandardFrame(SystemMessages.ERR_NAME_EXIST);
+			return false;
+		}
+
+		return true;
 	}
+
+	public static boolean isNameInParty(ArrayList<Character> list, String name) {
+		for (Character c : list) {
+			if (c.getName().equalsIgnoreCase(name)) return true;
+		}
+		return false;
+	}
+	public static boolean isNameOnDisk(String name) {
+		File file = new File(SystemConfig.SAVE_PATH + name + ".dat");
+		return file.exists();
+	}
+
+
+
+//	public static String characterNameValid (ArrayList<Character> list, Scanner scan) {
+//		while (true) {
+//			String analyzedInputName = UnInputStr.StringInput(scan);
+//			boolean flag = false;
+//
+//			if (analyzedInputName.isEmpty()) {
+//				Menu.printStandardFrame(SystemMessages.ERR_EMPTY_NAME);
+//				continue;
+//			}
+//			// 1. Проверяем в текущей сессии (в списке list)
+//			for (Character analyzedCharacter : list) {
+//				if (analyzedCharacter.getName().equalsIgnoreCase(analyzedInputName)) {
+//					Menu.printStandardFrame(SystemMessages.ERR_NAME_EXIST);
+//					flag = true;
+//					break;
+//				}
+//			}
+//
+//			// Если нашли в списке — идем на новый круг ввода
+//			if (flag) continue;
+//
+//			// 2. Проверяем на диске (в папке saves)
+//			if (isNameTaken(analyzedInputName)) {
+//				Menu.printStandardFrame(SystemMessages.ERR_NAME_EXIST);
+//				continue; // Имя занято на диске — на новый круг
+//			}
+//
+//			// Если прошли обе проверки — только тогда возвращаем имя
+//			return analyzedInputName;
+//		}
+//	}
 	public static boolean isNameTaken(String inputName) {
 		// 1. Формируем путь к потенциальному файлу (только имя + расширение)
 		String filePath = SystemConfig.SAVE_PATH + inputName + ".dat";

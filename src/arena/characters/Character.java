@@ -2,17 +2,6 @@ package arena.characters;
 import java.io.Serializable;
 import arena.logic.CombatIntent;
 
-
-
-//Первичный баланс цифрами
-//
-//		HP: Warrior 100, Mage 80
-//		Атака: Warrior 10–15, Mage 8–12
-//		Защита: Warrior 50% урон, Mage 100% урон (тратит Mana)
-//		Спешел: Warrior 2x урон (50 Rage), Mage +20 Mana или +15 HP (30 Mana)
-//     +Cooldown???
-//		Ресурс: Warrior Rage 0–100, Mage Mana 0–100, пассивное восстановление 5–10/ход
-//		Это даст сбалансированные по длине боя значения, чтобы бой длился 3–5 ходов, а спешел можно использовать 1–2 раза.
 public abstract class Character implements Serializable {
 	private String name;
 	private int health;
@@ -28,7 +17,15 @@ public abstract class Character implements Serializable {
 		this.name = name;
 		this.health = health;
 	}
+	private int accumulatedPoison = 0;
 
+	public void addPoison(int amount) {
+		this.accumulatedPoison += amount;
+	}
+
+	public int getPoisonValue() {
+		return this.accumulatedPoison;
+	}
 
 	public String getName(){
 		return this.name;
@@ -61,9 +58,9 @@ public abstract class Character implements Serializable {
 
 	public String[] getPersonalInfo() {
 		return new String[]{
-				"NAME  : " + getName(),
-				"STATUS: " + getHealth() + " HP | " + getResourceStatus(),
-				"WINS  : " + getWinCount()
+				"Name: " + getName(), "Wins: " + getWinCount(),
+				getHealth() + " HP | " + getResourceStatus()
+
 		};
 	}
 

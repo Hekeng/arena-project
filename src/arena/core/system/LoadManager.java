@@ -34,8 +34,9 @@ public class LoadManager {
 				Character hero = (Character) objectStream.readObject();
 				
 				// Твоя строка со String.join
-				String info = (menuRows.size() + 1) + ") " + String.join(" | ", hero.getPersonalInfo());
+				String info = (menuRows.size() + 1) + ". " + String.join(" | ", hero.getPersonalInfo());
 				menuRows.add(info);
+				info = ("");
 				
 				objectStream.close();
 			} catch (Exception e) {

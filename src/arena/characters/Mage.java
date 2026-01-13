@@ -4,13 +4,9 @@ import arena.helpers.UnRand;
 import arena.logic.CombatIntent;
 import arena.config.FightMenuConfig;
 
-import java.util.Random;
-
 public class Mage extends Character{
 	
-	private int mana; // Новое, уникальное поле
-
-	// Конструктор Mage
+	private int mana;
 	public Mage(String name, int health, int mana) {
 
 		super(name, health);

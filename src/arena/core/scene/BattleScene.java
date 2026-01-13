@@ -33,7 +33,6 @@ public class BattleScene {
 				eventCooldown = false; // Даем шанс на событие в следующем раунде
 			}
 
-			
 			int atkChoice = SkillChoiceScene.skillChoose(battle.getAttacker(), scan);
 			int defChoice = SkillChoiceScene.skillChoose(battle.getDefender(), scan);
 			

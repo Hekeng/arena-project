@@ -43,6 +43,7 @@ public final class MenuConfig {
 			"=================== MENU ===================",
 			"============ 1.Create Mage =================",
 			"============ 2.Create Warrior ==============",
+			"============ 3.Create Assassin =============",
 			"============ 0.Back to previous menu ======="
 	};
 	

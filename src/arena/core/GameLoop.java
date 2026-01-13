@@ -3,164 +3,182 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import arena.characters.Character;
-import arena.characters.Mage;
-import arena.characters.Warrior;
 
-import arena.helpers.UnInputInt;
-import arena.helpers.UnSlow;
-import arena.logic.Validation;
-
-import arena.config.MenuConfig;
+import arena.characters.CreateCharacters;
+import arena.config.FightClassesConfig;
 import arena.config.FightMenuConfig;
-
+import arena.config.MenuConfig;
+import arena.core.scene.Pauses;
+import arena.core.system.LoadManager;
+import arena.dialogs.SystemMessages;
+import arena.helpers.ClearConsole;
+import arena.helpers.UnInputInt;
+import arena.helpers.UnInputStr;
+import arena.logic.Validation;
 import arena.ui.Menu;
 
 
-
 public class GameLoop {
-	public static void main(String[] args) {
-		Scanner inputScanner = new Scanner(System.in);
-		ArrayList<Character> characterList = new ArrayList<>();// ВАЖНО ПЕРЕНЕСТИ!!!!
-		menuNav(inputScanner, characterList);
-		//Menu.menuStart();
-		//Menu.menuChooseClass();
-		//Menu.menuEnterName();
-		
-		
-		inputScanner.close();// ВАЖНО ПЕРЕНЕСТИ!!!!
-	}
-	
-	public static void menuNav(Scanner scan, ArrayList<Character> list
-	                           //, String[] menuArray
-	) {
+
+	public static void startMenu(Scanner scan, ArrayList<Character> list){
 		while (true) {
-			//ок
+			ClearConsole.clearConsole();
 			Menu.printStandardFrame(MenuConfig.MENU_START_MENU);
-			
-			int mainMenuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_START_MENU);
-			//ок
-			// 0. Exit
-			if (mainMenuChoice == MenuConfig.CLASS_ID_BACK) {
-				break;
+			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_START_MENU);
+			switch (menuChoice) {
+				case 1:
+					boolean iiFlag = true;
+					ClearConsole.clearConsole();
+					//после появления ии переделать правильно
+					hubMenu(scan, list);
+					break;
+				case 2:
+					iiFlag = false;
+					hubMenu(scan, list);
+					break;
+				case 0:
+					return;
+				default:
+					break;
 			}
 		}
 	}
+
+	public static void hubMenu(Scanner scan, ArrayList<Character> list){
+		while (true) {
+			//ClearConsole.clearConsole();
+			Menu.printStandardFrame(MenuConfig.MENU_HUB_MENU);
+			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_HUB_MENU);
+			switch (menuChoice) {
+				case 1:
+					chooseClassMenu(scan, list);
+					break;
+				case 2:
+					loadMenu(scan, list);
+					break;
+				case 3:
+					if (list.isEmpty()) {
+						Menu.printStandardFrame(SystemMessages.ERR_EMPTY_PARTY);
+						//Pauses.waitForContinue(scan);
+						continue;
+					} else {
+						for (Character c : list) {
+							ClearConsole.clearConsole();
+							Menu.printStandardFrame(FightClassesConfig.buildHeroCard(c, 3));
+							Pauses.waitForContinue(scan);
+						}
+					}
+					break;
+				case 9:
+					if (Validation.quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)) {
+						FightLoop.startFight(list, scan);
+						return;
+					} else {
+						Menu.printStandardFrame(SystemMessages.ERR_QUANTITY_FIGHTERS);
+						break;
+					}
+				case 0:
+					return;
+				default:
+					break;
+			}
+		}
+	}
+
+	public static void chooseClassMenu(Scanner scan, ArrayList<Character> list){
+		while (true) {
+			//ClearConsole.clearConsole();
+			Menu.printStandardFrame(MenuConfig.MENU_CHOOSE_CLASS);
+			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_CHOOSE_CLASS);
+			switch (menuChoice) {
+				case 1:
+					classPreviewMenu(scan, list, FightClassesConfig.CLASS_ID_MAGE);
+					if (!list.isEmpty()) return;
+					break;
+				case 2:
+					classPreviewMenu(scan, list, FightClassesConfig.CLASS_ID_WARRIOR);
+					if (!list.isEmpty()) return;
+					break;
+				case 3:
+					classPreviewMenu(scan, list, FightClassesConfig.CLASS_ID_ASSASSIN);
+					if (!list.isEmpty()) return;
+					break;
+				case 0:
+					return;
+				default:
+					break;
+			}
+		}
+	}
+
+	public static void classPreviewMenu(Scanner scan, ArrayList<Character> list, int classChoice){
+		//ClearConsole.clearConsole();
+
+		Menu.printStandardFrame(FightClassesConfig.buildHeroCard(CreateCharacters.createPreviewHero(classChoice), 1));
+		Menu.printStandardFrame(MenuConfig.MENU_CLASS_PREVIEW);
+		int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_CLASS_PREVIEW);
+
+
+		switch (menuChoice) {
+			case 1:
+				enterNameMenu(scan, list, classChoice);
+				return;
+
+			case 0:
+				return;
+			default:
+				break;
+		}
+
+	}
+	public static void enterNameMenu(Scanner scan, ArrayList<Character> list, int classChoice) {
+		String inputName = "";
+		//ClearConsole.clearConsole();
+		Menu.printStandardFrame(MenuConfig.MENU_ENTER_NAME);
+		while (true) {
+			inputName = UnInputStr.StringInput(scan);
+			if (Validation.characterNameValid(list, inputName)) {
+				break;
+			}
+			Pauses.waitForContinue(scan);
+			//ClearConsole.clearConsole();
+			Menu.printStandardFrame(MenuConfig.MENU_ENTER_NAME);
+		}
+		CreateCharacters.CreateCharacter(classChoice, inputName, list);
+		return;
+	}
+
+	public static void loadMenu (Scanner scan, ArrayList<Character> list) {
+		//ClearConsole.clearConsole();
+		if (list.size() < FightMenuConfig.MIN_FIGHTERS_QUANTITY) {
+			Menu.printStandardFrame(MenuConfig.buildHallOfFameMenu());
+			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.buildHallOfFameMenu());
+			if (menuChoice == 0) {
+				return;
+			}
+			Character newHero = LoadManager.loadCharacter(menuChoice);
+			if (newHero != null) {
+				if (Validation.isNameInParty(list, newHero.getName())) {
+					Menu.printStandardFrame(SystemMessages.ERR_CHAR_EXIST);
+					Pauses.waitForContinue(scan);
+					return;
+				} else {
+					list.add(newHero);
+					System.out.println("Hero " + newHero.getName() + " successfully joined the party!");
+					Pauses.waitForContinue(scan);
+					return;
+				}
+
+			} else {
+				Menu.printStandardFrame(SystemMessages.ERR_EMPTY_PARTY);
+				return;
+			}
+
+		} else {
+			// Если в отряде уже максимум бойцов, выводим сообщение и уходим
+			Menu.printStandardFrame(SystemMessages.ERR_PARTY_FULL);
+			Pauses.waitForContinue(scan);
+			return;
+		}
+	}
 }
-			// 2. Логика боя
-//			/if (mainMenuChoice == MenuConfig.START_FIGHT_ID) {
-
-
-//				if(!Validation.quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)){
-//					UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
-//					System.out.println("You must have min 2 fighters, please create fighters!");
-//					continue;
-//				}
-//				else {
-//
-//					FightLoop.startFight(list);
-//
-//				}
-
-//			}
-
-			// 1. Создание персонажа (переходим во вложенную логику)
-//			if (mainMenuChoice == MenuConfig.CREATE_CHARACTER_ID) {
-//				Menu.menuChooseClass();
-//				int classChoice = Validation.chooseClassMenuValid(scan);
-//
-//				// Если в подменю выбрали "Назад"
-//				if (classChoice == MenuConfig.CLASS_ID_BACK) {
-//					UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
-//					System.out.println("Return to main menu");
-//					continue;
-//				}
-//
-//				// Если выбрали конкретный класс
-//				if (classChoice == MenuConfig.CLASS_ID_MAGE || classChoice == MenuConfig.CLASS_ID_WARRIOR) {
-//					Menu.menuEnterName();
-//					String characterName = characterNameValid(list, scan);
-//					characterCreation(classChoice, characterName, list);
-//				}
-//			}
-//		}
-//	}
-
-
-//	public static int mainMenuValid(Scanner Scan, ArrayList<Character> list){
-//
-//		int meinMenuUserAnswer ;
-//
-//		do {
-//
-//			meinMenuUserAnswer = UnInputInt.ZhalenInput(Scan);
-//			//System.out.println("Yours input was: " + meinMenuUserAnswer);//test
-//
-//			if (!quantityPunktsMenuValid(meinMenuUserAnswer, MenuConfig.MAIN_MENU_PUNKTS_QUANTUTY)) {
-//				UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
-//				System.out.println("Yours input: " + meinMenuUserAnswer + " is wrong please input only 0, 1, 2. ");
-//				Menu.menuStart();
-//				System.out.println("Input please you choice :");//test
-//				continue;
-//			}
-//
-////			if (!quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)) {
-////				System.out.println("You already have two fighters! You kan only start to fight! (menu 2)");
-////				Menu.menuStart();
-////				System.out.println("Input please you choice ");
-////				continue;
-////			}
-//
-//			return meinMenuUserAnswer;
-//
-//		} while (true);
-//
-//	}
-//
-//	public static int chooseClassMenuValid (Scanner Scan){
-//		int createCharacterMenuUserAnswer;
-//
-//		do{
-//			createCharacterMenuUserAnswer = UnInputInt.ZhalenInput(Scan);
-//
-//			if (!quantityPunktsMenuValid(createCharacterMenuUserAnswer, MenuConfig.CHOOSE_CLASS_MENU_PUNKTS_QUANTUTY)) {
-//				UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
-//				System.out.println("Yours input: " + createCharacterMenuUserAnswer + " is wrong please input only 0, 1, 2. ");
-//				System.out.println("Input please you choice: ");//test
-//				continue;
-//			}
-//
-//			return createCharacterMenuUserAnswer;
-//		}while (true);
-//	}
-//
-//
-//	public static boolean quantityPunktsMenuValid (int answer, int quantityPunkts) {
-//		if (answer < 0 || answer >= quantityPunkts) {
-//			return false;
-//		}
-//		return true;
-//	}
-//	public static boolean quantityFightersValid (ArrayList<Character> list, int minFighters){
-//		if (list.size() >= minFighters) {
-//			return false;
-//		}
-//		return true;
-//	}
-
-//	public static void characterCreation (int answer, String charName, ArrayList<Character> list){
-//		if (answer == 1){
-//			System.out.println("You created Mage!" );
-//			Mage mage = new Mage(charName, 100, 40);
-//			list.add(mage);
-//		}
-//
-//		if (answer == 2){
-//			System.out.println("You created Warrior!" );
-//			Warrior warrior = new Warrior(charName, 100, 20);
-//			list.add(warrior);
-//		}
-//	}
-//refactor class:
-
-
-//}

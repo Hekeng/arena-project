@@ -14,8 +14,12 @@ public class RoundResult {
 	public final int atkResourceChange;
 
 	public final int defResourceChange;
-	
-	public RoundResult(String attackMessage, int rawAttackerDmg, int dmgToDef, int atkResourceChange, String defMessage, int rawDefenderDmg, int dmgToAtk, int defResourceChange, boolean defResponded) {
+
+	public final int atkPoisonDmg;
+	public final int defPoisonDmg;
+	public RoundResult(String attackMessage, int rawAttackerDmg, int dmgToDef, int atkResourceChange, int atkPoisonDmg,
+	                   String defMessage, int rawDefenderDmg, int dmgToAtk, int defResourceChange, int defPoisonDmg,
+	                   boolean defResponded) {
 		this.attackMessage = attackMessage;
 		this.defMessage = defMessage;
 		this.dmgToDef = dmgToDef;
@@ -25,6 +29,7 @@ public class RoundResult {
 		this.atkResourceChange = atkResourceChange;
 		this.defResourceChange =  defResourceChange;
 		this.defResponded = defResponded;
-		
+		this.atkPoisonDmg = atkPoisonDmg;
+		this.defPoisonDmg = defPoisonDmg;
 	}
 }
