@@ -19,47 +19,111 @@ import arena.ui.Menu;
 
 
 public class GameLoop {
+	public void start(Scanner scan, ArrayList<Character> list) {
+		String state = "MAIN_MENU";
+		while (!state.equals("EXIT")) {
+			switch (state) {
+				case "MAIN_MENU":
+					state = startMenu(scan, list);
+					break;
+				case "AI_CHOICE":
+					state = aiChoose_class(scan, list);
+					break;
+				case "HUB":
+					state = hubMenu(scan, list);
+					break;
+				case "CHOICE_CLASS":
+					String choice = chooseClassMenu(scan);
+					if (choice.equals("BACK")) {
+						state = "MAIN_MENU";
+					} else {
+						pendingClassId = Integer.parseInt(choice);
+						state = "CLASS_PREVIEW";
+					}
+					break;
+				case "LOAD_MENU":
+					state = showHub();
+				case "CLASS_PREVIEW":
+					state = showHub();
 
-	public static void startMenu(Scanner scan, ArrayList<Character> list){
+				case "FIGHT":
+					runBattle();
+					state = "POST_BATTLE";
+					break;
+				case "POST_BATTLE":
+					state = "HUB";
+					break;
+			}
+		}
+	}
+
+	public static String startMenu(Scanner scan, ArrayList<Character> list){
 		while (true) {
 			ClearConsole.clearConsole();
 			Menu.printStandardFrame(MenuConfig.MENU_START_MENU);
 			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_START_MENU);
 			switch (menuChoice) {
 				case 1:
-					boolean iiFlag = true;
-					ClearConsole.clearConsole();
-					//после появления ии переделать правильно
-					hubMenu(scan, list);
-					break;
+					return "AI_CHOICE";
 				case 2:
-					iiFlag = false;
-					hubMenu(scan, list);
-					break;
+					return "HUB";
 				case 0:
-					return;
-				default:
+					return "EXIT";
+					default:
 					break;
 			}
 		}
 	}
-
-	public static void hubMenu(Scanner scan, ArrayList<Character> list){
+	public static String aiChoose_class (Scanner scan, ArrayList<Character> list){
 		while (true) {
-			//ClearConsole.clearConsole();
+			ClearConsole.clearConsole();
+			Menu.printStandardFrame(MenuConfig.MENU_CHOOSE_CLASS);
+			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_CHOOSE_CLASS);
+			Character newCharacter = null;
+			switch (menuChoice) {
+				case 1:
+					newCharacter = CreateCharacters.CreateCharacter(menuChoice, "Bot_Mage");
+					newCharacter.setisAi(true);
+					list.add(newCharacter);
+					return "HUB";
+				case 2:
+					newCharacter = CreateCharacters.CreateCharacter(menuChoice, "Bot_Warrior");
+					newCharacter.setisAi(true);
+					list.add(newCharacter);
+					return "HUB";
+				case 3:
+					newCharacter = CreateCharacters.CreateCharacter(menuChoice, "Bot_Assassin");
+					newCharacter.setisAi(true);
+					list.add(newCharacter);
+					return "HUB";
+				case 0:
+					return "MAIN_MENU";
+				default:
+					break;
+			}
+		}
+
+	}
+
+
+
+
+	public static String hubMenu(Scanner scan, ArrayList<Character> list){
+		while (true) {
 			Menu.printStandardFrame(MenuConfig.MENU_HUB_MENU);
 			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_HUB_MENU);
 			switch (menuChoice) {
 				case 1:
-					chooseClassMenu(scan, list);
-					break;
+					return "CHOICE_CLASS";
+//					chooseClassMenu(scan, list);
+//					break;
 				case 2:
-					loadMenu(scan, list);
-					break;
+					return "LOAD_MENU";
+//					loadMenu(scan, list);
+//					break;
 				case 3:
 					if (list.isEmpty()) {
 						Menu.printStandardFrame(SystemMessages.ERR_EMPTY_PARTY);
-						//Pauses.waitForContinue(scan);
 						continue;
 					} else {
 						for (Character c : list) {
@@ -68,24 +132,24 @@ public class GameLoop {
 							Pauses.waitForContinue(scan);
 						}
 					}
-					break;
+					return "HUB";
 				case 9:
 					if (Validation.quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)) {
 						FightLoop.startFight(list, scan);
-						return;
+						return "HUB";
 					} else {
 						Menu.printStandardFrame(SystemMessages.ERR_QUANTITY_FIGHTERS);
 						break;
 					}
 				case 0:
-					return;
+					return "MAIN_MENU";
 				default:
 					break;
 			}
 		}
 	}
 
-	public static void chooseClassMenu(Scanner scan, ArrayList<Character> list){
+	public static String chooseClassMenu(Scanner scan, ArrayList<Character> list){
 		while (true) {
 			//ClearConsole.clearConsole();
 			Menu.printStandardFrame(MenuConfig.MENU_CHOOSE_CLASS);
@@ -93,18 +157,17 @@ public class GameLoop {
 			switch (menuChoice) {
 				case 1:
 					classPreviewMenu(scan, list, FightClassesConfig.CLASS_ID_MAGE);
-					if (!list.isEmpty()) return;
-					break;
+					if (!list.isEmpty()) {
+						return "CLASS_PREVIEW";
+					}
 				case 2:
 					classPreviewMenu(scan, list, FightClassesConfig.CLASS_ID_WARRIOR);
-					if (!list.isEmpty()) return;
-					break;
+					if (!list.isEmpty()) return "HUB";
 				case 3:
 					classPreviewMenu(scan, list, FightClassesConfig.CLASS_ID_ASSASSIN);
-					if (!list.isEmpty()) return;
-					break;
+					if (!list.isEmpty()) return "HUB";
 				case 0:
-					return;
+					return "HUB";
 				default:
 					break;
 			}
@@ -144,7 +207,8 @@ public class GameLoop {
 			//ClearConsole.clearConsole();
 			Menu.printStandardFrame(MenuConfig.MENU_ENTER_NAME);
 		}
-		CreateCharacters.CreateCharacter(classChoice, inputName, list);
+		Character newCharacter = CreateCharacters.CreateCharacter(classChoice, inputName);
+		list.add(newCharacter);
 		return;
 	}
 

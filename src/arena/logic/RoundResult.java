@@ -1,8 +1,6 @@
 package arena.logic;
 
 public class RoundResult {
-	// Делаем поля public и final, чтобы их можно было легко прочитать,
-	// но нельзя было изменить после создания "посылки"
 	public final String attackMessage;
 	public final String defMessage;
 	public final int rawAttackerDmg;
@@ -10,15 +8,14 @@ public class RoundResult {
 	public final int dmgToDef;
 	public final int dmgToAtk;
 	public final boolean defResponded;
-
 	public final int atkResourceChange;
-
 	public final int defResourceChange;
-
 	public final int atkPoisonDmg;
 	public final int defPoisonDmg;
-	public RoundResult(String attackMessage, int rawAttackerDmg, int dmgToDef, int atkResourceChange, int atkPoisonDmg,
-	                   String defMessage, int rawDefenderDmg, int dmgToAtk, int defResourceChange, int defPoisonDmg,
+	public final int atkTargetResChange;
+	public final int defTargetResChange;
+	public RoundResult(String attackMessage, int rawAttackerDmg, int dmgToDef, int atkResourceChange, int atkPoisonDmg,int atkTargetResChange,
+	                   String defMessage, int rawDefenderDmg, int dmgToAtk, int defResourceChange, int defPoisonDmg, int defTargetResChange,
 	                   boolean defResponded) {
 		this.attackMessage = attackMessage;
 		this.defMessage = defMessage;
@@ -31,5 +28,7 @@ public class RoundResult {
 		this.defResponded = defResponded;
 		this.atkPoisonDmg = atkPoisonDmg;
 		this.defPoisonDmg = defPoisonDmg;
+		this.atkTargetResChange= atkTargetResChange;
+		this.defTargetResChange = defTargetResChange;
 	}
 }

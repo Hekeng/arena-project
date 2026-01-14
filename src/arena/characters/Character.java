@@ -3,30 +3,22 @@ import java.io.Serializable;
 import arena.logic.CombatIntent;
 
 public abstract class Character implements Serializable {
+	boolean isAi = false;
 	private String name;
 	private int health;
 	private boolean isAlive = true;
-
 	private int winCount = 0;
-
-//	private int resource;
-	
-	//protected int attack;
-	
 	public Character(String name, int health) {
 		this.name = name;
 		this.health = health;
 	}
-	private int accumulatedPoison = 0;
+	public String[] getPersonalInfo() {
+		return new String[]{
+				"Name: " + getName(), "Wins: " + getWinCount(),
+				getHealth() + " HP | " + getResourceStatus()
 
-	public void addPoison(int amount) {
-		this.accumulatedPoison += amount;
+		};
 	}
-
-	public int getPoisonValue() {
-		return this.accumulatedPoison;
-	}
-
 	public String getName(){
 		return this.name;
 	}
@@ -43,30 +35,31 @@ public abstract class Character implements Serializable {
 	public void setHealth(int health) {
 		this.health = health;
 	}
-
+	private int accumulatedPoison = 0;
+	public void addPoison(int amount) {
+		this.accumulatedPoison += amount;
+	}
+	public int getPoisonValue() {
+		return this.accumulatedPoison;
+	}
+	public void setPoisonValue(int amount) {
+		this.accumulatedPoison = amount;
+	}
 	public void setIsAlive(boolean isAlive){
 		this.isAlive = isAlive;
+	}
+
+	public void setisAi(Boolean state){
+		this.isAi = state;
+	}
+	public boolean getisAi() {
+		return this.isAi;
 	}
 
 	public void addWin() {
 		this.winCount++;
 	}
-	
-//	public void setAttack(int attack){
-//		this.attack = attack;
-//	}
-
-	public String[] getPersonalInfo() {
-		return new String[]{
-				"Name: " + getName(), "Wins: " + getWinCount(),
-				getHealth() + " HP | " + getResourceStatus()
-
-		};
-	}
-
-	// Заглушка для истории (переопределим в Маге/Воине)
 	public abstract String[] getHistoryInfo();
-
 	public void takeDamage(int amount) {
 
 		this.health = this.health - amount; // или this.health -= amount;
@@ -78,15 +71,6 @@ public abstract class Character implements Serializable {
 			System.out.println(this.getName() + " has fallen.");//для тестов удалить когда закончу.
 		}
 		// Логика работы с полями объекта (например, this.health)
-	}
-	
-	public void die() {
-		// 1. Условие: если isAlive уже false (персонаж мертв)
-		if (this.health == 0 || this.isAlive == false) {
-			throw new IllegalStateException("Character is already dead.");
-		}
-		this.isAlive = false;
-		System.out.println(this.getName() + " has fallen.");
 	}
 
 	public abstract int getResourceValue();
@@ -107,6 +91,8 @@ public abstract class Character implements Serializable {
 	public abstract String[] getMySkillMenu();
 
 	public abstract String[] getClassDescription();
+
+	public abstract int getMaxHealth();
 	
 	public CombatIntent executeAction(int choice) {
 		switch (choice) {
@@ -116,23 +102,32 @@ public abstract class Character implements Serializable {
 			default: return new CombatIntent(); // Сделать свитч тут....
 		}
 	}
-// это костыль:
-	@Override
-	public String toString() {
-		// 1. Начинаем строку
-		String result = "Hero: " + name + " | ";
-
-		result = result + "Class: " + this.getClass().getSimpleName() + " | ";
-		result = result + "Health: " + health + " | ";
-
-		if (isAlive) {
-			result = result + "Live" + " | \n";
-		} else {
-			result = result + "Dead" + " | \n";
+	public void die() {
+		// 1. Условие: если isAlive уже false (персонаж мертв)
+		if (this.health == 0 || this.isAlive == false) {
+			throw new IllegalStateException("Character is already dead.");
 		}
-
-		return result;
+		this.isAlive = false;
+		System.out.println(this.getName() + " has fallen.");
 	}
+
+// это костыль:
+//	@Override
+//	public String toString() {
+//		// 1. Начинаем строку
+//		String result = "Hero: " + name + " | ";
+//
+//		result = result + "Class: " + this.getClass().getSimpleName() + " | ";
+//		result = result + "Health: " + health + " | ";
+//
+//		if (isAlive) {
+//			result = result + "Live" + " | \n";
+//		} else {
+//			result = result + "Dead" + " | \n";
+//		}
+//
+//		return result;
+//	}
 
 }
 

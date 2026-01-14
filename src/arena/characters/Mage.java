@@ -45,6 +45,10 @@ public class Mage extends Character{
 		if (this.mana>=100) this.mana = 100;
 		
 	}
+	@Override
+	public  int getMaxHealth(){
+		return FightClassesConfig.BASE_MAGE_HP;
+	}
 	
 	@Override
 	public CombatIntent attack() {

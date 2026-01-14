@@ -42,9 +42,16 @@ public class BattleController {
 
 		int atkResourceChange = intentAtk.selfResourceChange;
 		int defResourceChange = intentDef.selfResourceChange;
-		
+		//сжигаем ресурсы врага
 		boolean defResponded;
-		// 3. Применяем последствия
+		if (intentAtk.targetResourceChange != 0) {
+			this.defender.changeMyResource(intentAtk.targetResourceChange);
+		}
+
+		if (intentDef.targetResourceChange != 0) {
+			this.attacker.changeMyResource(intentDef.targetResourceChange);
+		}
+		// 3. Применяем последствия демедж
 		this.defender.takeDamage(damageToDef);
 
 		if (intentAtk.dotDamage > 0) {
@@ -72,10 +79,13 @@ public class BattleController {
 		if (this.attacker.getIsAlive() && this.attacker.getPoisonValue() > 0) {
 			this.attacker.takeDamage(this.attacker.getPoisonValue());
 		}
+		int atkTargetResChange = intentAtk.targetResourceChange;
+		int defTargetResChange = intentDef.targetResourceChange;
+
 		int atkPoisonDmg = this.attacker.getPoisonValue();
 		int defPoisonDmg = this.defender.getPoisonValue();
 		
-		return new RoundResult(intentAtk.message, rawAttackerDmg, damageToDef, atkResourceChange, atkPoisonDmg, intentDef.message, rawDefenderDmg, damageToAtk, defResourceChange, defPoisonDmg, defResponded);
+		return new RoundResult(intentAtk.message, rawAttackerDmg, damageToDef, atkResourceChange, atkPoisonDmg, atkTargetResChange, intentDef.message, rawDefenderDmg, damageToAtk, defResourceChange, defPoisonDmg, defTargetResChange, defResponded);
 	}
 
 		public void changeRolls() {

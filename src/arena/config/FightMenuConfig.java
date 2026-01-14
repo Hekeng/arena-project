@@ -97,38 +97,8 @@ public static final String[] FIGHT_MENU_CHOOSE_WARRIOR_SKILL = {
 //	}
 public static String[] getAfterRoundStatus(Character atk, Character def, RoundResult result) {
 	List<String> lines = new ArrayList<>();
-	lines.add("=============== ROUND RESULT ===============");
 
-	// Секция сообщений о действиях
-	lines.add(" " + atk.getName() + ": " + result.attackMessage +"\n"
-			+ " " + def.getName() + ": " + result.defMessage
-	);
-
-	// Секция урона Атакующего
-	int blockedAtk = result.rawAttackerDmg - result.dmgToDef;
-	lines.add(atk.getName() + " DEALT: " + result.rawAttackerDmg + (blockedAtk > 0 ? " [Blocked: " + blockedAtk + "]" : "") + " -> Final: " + result.dmgToDef + " DMG");
-
-	// Секция Защищающегося
-	if (result.defResponded) {
-		int blockedDef = result.rawDefenderDmg - result.dmgToAtk;
-		lines.add(def.getName() + " RETALIATED: " + result.rawDefenderDmg + (blockedDef > 0 ? " [Blocked: " + blockedDef + "]" : "") + " -> Final: " + result.dmgToAtk + " DMG");
-	} else {
-		lines.add(" " + def.getName() + " was defeated and could not act!");
-	}
-
-	// --- НОВАЯ СЕКЦИЯ: ЯД ---
-	if (atk.getPoisonValue() > 0 || def.getPoisonValue() > 0) {
-		lines.add("------------------ POISON ------------------");
-		if (atk.getPoisonValue() > 0) {
-			lines.add(" " + atk.getName() + " is poisoned! (Current: " + atk.getPoisonValue() + " DMG/round)");
-		}
-		if (def.getPoisonValue() > 0) {
-			lines.add(" " + def.getName() + " is poisoned! (Current: " + def.getPoisonValue() + " DMG/round)");
-		}
-	}
-
-	lines.add("================== STATUS ==================");
-
+	// --- 1. Сначала считаем все знаки и суммы, чтобы использовать их ниже ---
 	int totalDmgToAtk = result.dmgToAtk + result.atkPoisonDmg;
 	int totalDmgToDef = result.dmgToDef + result.defPoisonDmg;
 
@@ -138,7 +108,54 @@ public static String[] getAfterRoundStatus(Character atk, Character def, RoundRe
 	String defHpSign = (totalDmgToDef > 0) ? "-" : "";
 	String defResSign = (result.defResourceChange > 0) ? "+" : "";
 
-	// Используем новые константы HP из конфига (например, 120 для воина)
+	// --- 2. Формируем визуальные блоки ---
+
+	lines.add("=============== ROUND RESULT ===============");
+
+	// Секция сообщений (твоя связка через \n)
+	lines.add(" " + atk.getName() + ": " + result.attackMessage + "\n"
+			+ " " + def.getName() + ": " + result.defMessage
+	);
+
+	// Секция сжигания ресурсов (если оно было)
+	if (result.defTargetResChange < 0 || result.atkTargetResChange < 0) {
+
+		lines.add("================= RESOURCES ================");
+		if (result.defTargetResChange < 0) {
+			lines.add(" " + atk.getName() + " burned " + result.defTargetResChange + " from " + def.getName());
+		}
+		if (result.atkTargetResChange < 0) {
+			lines.add(" " + def.getName() + " burned " + result.atkTargetResChange + " from " + atk.getName());
+		}
+	}
+
+	// Секция урона Атакующего
+	int blockedAtk = result.rawAttackerDmg - result.dmgToDef;
+	lines.add(atk.getName() + " DEALT: " + result.rawAttackerDmg + (blockedAtk > 0 ? " [Blocked: " + blockedAtk + "]" : "") + " -> Final: " + result.dmgToDef + " DMG");
+
+	// Секция урона Защищающегося
+	if (result.defResponded) {
+		int blockedDef = result.rawDefenderDmg - result.dmgToAtk;
+		lines.add(def.getName() + " RETALIATED: " + result.rawDefenderDmg + (blockedDef > 0 ? " [Blocked: " + blockedDef + "]" : "") + " -> Final: " + result.dmgToAtk + " DMG");
+	} else {
+		lines.add(" " + def.getName() + " was defeated and could not act!");
+	}
+
+	// Секция Яда
+	if (atk.getPoisonValue() > 0 || def.getPoisonValue() > 0) {
+
+		lines.add("================== POISON ==================");
+		if (atk.getPoisonValue() > 0) {
+			lines.add(" " + atk.getName() + " poison tick: -" + result.atkPoisonDmg + " HP (Current stack: " + atk.getPoisonValue() + ")");
+		}
+		if (def.getPoisonValue() > 0) {
+			lines.add(" " + def.getName() + " poison tick: -" + result.defPoisonDmg + " HP (Current stack: " + def.getPoisonValue() + ")");
+		}
+	}
+
+	// Финальный статус
+	lines.add("================== STATUS ==================");
+
 	lines.add(" " + atk.getName() + " HP: " + atk.getHealth() + " (" + atkHpSign + totalDmgToAtk + ") | "
 			+ atk.getResourceStatus() + " (" + atkResSign + result.atkResourceChange + ")");
 

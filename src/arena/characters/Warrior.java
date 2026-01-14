@@ -18,6 +18,10 @@ public class Warrior extends Character implements Serializable {
 		this.rage = rage;
 		
 	}
+	@Override
+	public  int getMaxHealth(){
+		return FightClassesConfig.BASE_WARRIOR_HP;
+	}
 	
 	@Override
 	protected int resultDamage(int min, int max){

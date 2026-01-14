@@ -13,8 +13,9 @@ import arena.helpers.ClearConsole;
 
 import arena.core.system.SaveManager;
 
-
 import arena.dialogs.BattleNarration;
+
+import arena.logic.AfterBattleHeal;
 
 
 public class PostBattleScene {
@@ -28,7 +29,7 @@ public class PostBattleScene {
 			if (c.getIsAlive()) winner = c;
 			else loser = c;
 		}
-		//Pauses.waitForContinue(scan);
+
 		// 2. Сцена смерти (Панихида)
 		ClearConsole.clearConsole();
 		Menu.printStandardFrame(BattleNarration.DEATH_TRIBUTE);
@@ -36,10 +37,10 @@ public class PostBattleScene {
 
 		// 3. Сцена триумфа
 		ClearConsole.clearConsole();
-		winner.addWin(); // Прибавляем победу сразу
+		winner.addWin();
 		Menu.printStandardFrame(BattleNarration.VICTORY_SHOUTS);
 
-		// Показываем карточку победителя (наш режим 3 - только статы и имя)
+		// карточка победителя
 		String[] winnerCard = FightClassesConfig.buildHeroCard(winner, 3);
 		Menu.printStandardFrame(winnerCard);
 
@@ -47,19 +48,14 @@ public class PostBattleScene {
 
 		// 4. Лечение
 		ClearConsole.clearConsole();
-		int healAmount = (int)((100 - winner.getHealth()) * 0.2); // 20% от нехватки до 100
-		winner.setHealth(winner.getHealth() + healAmount);
-
 
 		Narration.Narration(BattleNarration.RECOVERY_LOG);
-		System.out.println("\n====== " + winner.getName() + " restored " + healAmount + " HP. ======");
+		System.out.println("\n====== " + winner.getName() + " restored " + AfterBattleHeal.healthHeal(winner) + " HP. ======");
+
 		SaveManager.saveCharacter(winner);
 		Pauses.waitForContinue(scan);
 
-		// 5. Сохранение (Тут будет вызов метода записи в файл)
-		
-
-		// 6. Очистка списка (Удаляем мертвого, чтобы он не вернулся в меню)
+		AfterBattleHeal.healthHeal(loser);
 		list.remove(loser);
 		ClearConsole.clearConsole();
 	}

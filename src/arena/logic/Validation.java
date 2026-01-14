@@ -17,60 +17,60 @@ import java.util.Scanner;
 import java.io.*;
 
 public class Validation {
-	public static int mainMenuValid(Scanner Scan, String[] menuArray) {
-		
-		int meinMenuUserAnswer ;
-		
-		do {
-			
-			meinMenuUserAnswer = UnInputInt.numericInput(Scan, menuArray);
-			//System.out.println("Yours input was: " + meinMenuUserAnswer);//test
-			
-			int maxChoice = quantityMenuItemsValid(meinMenuUserAnswer, menuArray);
-			
-			if (maxChoice == 0) {
-				UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
-
-				System.out.println("Yours input: " + meinMenuUserAnswer + " is wrong please input only 0, 1, 2. ");//поправить аутпут
-				Menu.menuStart();
-				//System.out.println("Input please you choice :");//test
-				continue;
-			}
-			
-			return meinMenuUserAnswer;
-			
-		} while (true);
-		
-	}
-	
-	public static int chooseClassMenuValid (Scanner Scan, String[] menuArray){
-		int createCharacterMenuUserAnswer;
-		
-		do{
-			createCharacterMenuUserAnswer = UnInputInt.numericInput(Scan, menuArray);
-			
-			if (Validation.quantityMenuItemsValid(createCharacterMenuUserAnswer,  menuArray) == 0) {
-				UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
-				System.out.println("Yours input: " + createCharacterMenuUserAnswer + " is wrong please input only 0, 1, 2. ");
-				System.out.println("Input please you choice: ");//test
-				continue;
-			}
-			
-			return createCharacterMenuUserAnswer;
-		}while (true);
-	}
-	
-	
-	public static int quantityMenuItemsValid(int answer, String[] menuArray) {
-		
-		int maxChoice = menuArray.length - MenuConfig.MENU_HEADER_SIZE;
-		
-		if (answer < 0 || answer >= maxChoice) {
-			
-			return maxChoice=0;
-		}
-		return maxChoice;
-	}
+//	public static int mainMenuValid(Scanner Scan, String[] menuArray) {
+//
+//		int meinMenuUserAnswer ;
+//
+//		do {
+//
+//			meinMenuUserAnswer = UnInputInt.numericInput(Scan, menuArray);
+//			//System.out.println("Yours input was: " + meinMenuUserAnswer);//test
+//
+//			int maxChoice = quantityMenuItemsValid(meinMenuUserAnswer, menuArray);
+//
+//			if (maxChoice == 0) {
+//				UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
+//
+//				System.out.println("Yours input: " + meinMenuUserAnswer + " is wrong please input only 0, 1, 2. ");//поправить аутпут
+//				Menu.menuStart();
+//				//System.out.println("Input please you choice :");//test
+//				continue;
+//			}
+//
+//			return meinMenuUserAnswer;
+//
+//		} while (true);
+//
+//	}
+//
+//	public static int chooseClassMenuValid (Scanner Scan, String[] menuArray){
+//		int createCharacterMenuUserAnswer;
+//
+//		do{
+//			createCharacterMenuUserAnswer = UnInputInt.numericInput(Scan, menuArray);
+//
+//			if (Validation.quantityMenuItemsValid(createCharacterMenuUserAnswer,  menuArray) == 0) {
+//				UnSlow.slowFunc(MenuConfig.OUTPUT_MENU_DELAY);
+//				System.out.println("Yours input: " + createCharacterMenuUserAnswer + " is wrong please input only 0, 1, 2. ");
+//				System.out.println("Input please you choice: ");//test
+//				continue;
+//			}
+//
+//			return createCharacterMenuUserAnswer;
+//		}while (true);
+//	}
+//
+//
+//	public static int quantityMenuItemsValid(int answer, String[] menuArray) {
+//
+//		int maxChoice = menuArray.length - MenuConfig.MENU_HEADER_SIZE;
+//
+//		if (answer < 0 || answer >= maxChoice) {
+//
+//			return maxChoice=0;
+//		}
+//		return maxChoice;
+//	}
 	
 	public static boolean quantityFightersValid (ArrayList<Character> list, int minFighters){
 		if (list.size() >= minFighters) {
@@ -101,6 +101,12 @@ public class Validation {
 	}
 	public static boolean isNameOnDisk(String name) {
 		File file = new File(SystemConfig.SAVE_PATH + name + ".dat");
+		return file.exists();
+	}
+	public static boolean isNameTaken(String inputName) {
+		// 1. Формируем путь к потенциальному файлу (только имя + расширение)
+		String filePath = SystemConfig.SAVE_PATH + inputName + ".dat";
+		File file = new File(filePath);
 		return file.exists();
 	}
 
@@ -137,12 +143,7 @@ public class Validation {
 //			return analyzedInputName;
 //		}
 //	}
-	public static boolean isNameTaken(String inputName) {
-		// 1. Формируем путь к потенциальному файлу (только имя + расширение)
-		String filePath = SystemConfig.SAVE_PATH + inputName + ".dat";
-		File file = new File(filePath);
-		return file.exists();
-	}
+
 	
 //	public static String errorMenuMessage (int maxChoice, String[] menuArray){
 //		String message;

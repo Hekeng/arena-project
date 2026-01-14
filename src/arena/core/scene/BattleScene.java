@@ -33,13 +33,13 @@ public class BattleScene {
 				eventCooldown = false; // Даем шанс на событие в следующем раунде
 			}
 
-			int atkChoice = SkillChoiceScene.skillChoose(battle.getAttacker(), scan);
-			int defChoice = SkillChoiceScene.skillChoose(battle.getDefender(), scan);
+			int atkChoice = SkillChoiceScene.skillChoose(battle.getAttacker(), battle.getDefender(), scan);
+
+			int defChoice = SkillChoiceScene.skillChoose(battle.getDefender(), battle.getAttacker(), scan);
 			
 			RoundResult result = battle.executeRound(atkChoice, defChoice);
 			
 			String[] fightResultMessage = FightMenuConfig.getAfterRoundStatus(battle.getAttacker(), battle.getDefender(), result
-					//battle.getAttacker(), result.attackMessage, battle.getDefender(), result.defMessage, result.damage
 			);
 			
 			Menu.printStandardFrame(fightResultMessage);

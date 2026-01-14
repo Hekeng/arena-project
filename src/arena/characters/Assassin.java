@@ -17,6 +17,10 @@ public class Assassin extends Character{
 		public int getStamina(){
 			return this.stamina;
 		}
+	@Override
+	public  int getMaxHealth(){
+		return FightClassesConfig.BASE_ASSASSIN_HP;
+	}
 		@Override
 		public int getResourceValue(){
 			int resourceValue = getStamina();
@@ -49,7 +53,7 @@ public class Assassin extends Character{
 			if (this.stamina >= FightClassesConfig.MIN_ASSASSIN_SKILL_COST) {
 				intent.damageValue = resultDamage(FightClassesConfig.BASE_MIN_ASSASSIN_DMG, FightClassesConfig.BASE_MAX_ASSASSIN_DMG);
 				intent.selfResourceChange -= FightClassesConfig.MIN_ASSASSIN_SKILL_COST;
-				intent.dotDamage += FightClassesConfig.BASE_MIN_ASSASSIN_DMG;
+				intent.dotDamage += FightClassesConfig.BASE_MIN_ASSASSIN_DMG/2;
 				intent.message = "lightning-fast jabbed with a knife...";
 			} else {intent.damageValue = 0;
 				intent.selfResourceChange += FightClassesConfig.MIN_ASSASSIN_SKILL_COST;
@@ -77,7 +81,7 @@ public class Assassin extends Character{
 			intent.selfResourceChange -= FightClassesConfig.BASE_ASSASSIN_SKILL_COST;
 			intent.message = "used a smoke bomb";
 			intent.targetResourceChange -= FightClassesConfig.MIN_ASSASSIN_SKILL_COST * 2;
-			intent.dotDamage += FightClassesConfig.BASE_MIN_ASSASSIN_DMG;
+			intent.dotDamage += FightClassesConfig.BASE_MIN_ASSASSIN_DMG/2;
 			return intent;
 		}
 
@@ -89,7 +93,7 @@ public class Assassin extends Character{
 		public String[] getClassDescription() {
 			return new String[]{
 					"ATTACK  : " + FightClassesConfig.MIN_ASSASSIN_SKILL_COST + "-" + FightClassesConfig.BASE_MAX_ASSASSIN_DMG + " DMG | Cost: " + FightClassesConfig.BASE_ASSASSIN_SKILL_COST + " " + getResourceName(),
-					"PASSIVE : Every attack injects POISON (+" + FightClassesConfig.BASE_MIN_ASSASSIN_DMG + " DOT per stack)",
+					"PASSIVE : Every attack injects POISON (+" + FightClassesConfig.BASE_MIN_ASSASSIN_DMG/2 + " DOT per stack)",
 					"PARRY   : 70% DMG Reduction | Counter-attack: 50% DMG + POISON",
 					"SPECIAL : Smoke Bomb | 80% Dodge | Drain target " + (FightClassesConfig.BASE_ASSASSIN_SKILL_COST * 2) + " Res",
 					"STYLE   : Low direct damage, but deadly over time (DOT focus)"
