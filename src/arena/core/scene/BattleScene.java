@@ -30,7 +30,7 @@ public class BattleScene {
 				ClearConsole.clearConsole();
 				eventCooldown = true;
 			} else {
-				eventCooldown = false; // Даем шанс на событие в следующем раунде
+				eventCooldown = false; // шанс на событие в следующем раунде
 			}
 
 			int atkChoice = SkillChoiceScene.skillChoose(battle.getAttacker(), battle.getDefender(), scan);
@@ -54,8 +54,7 @@ public class BattleScene {
 			 Pauses.waitForContinue(scan);
 			 ClearConsole.clearConsole();
 		}
-//		Character winner = battle.getAttacker().getIsAlive() ? battle.getAttacker() : battle.getDefender();
-//		Character loser = battle.getAttacker().getIsAlive() ? battle.getDefender() : battle.getAttacker();
+
 
 	return true;
 	}

@@ -89,6 +89,7 @@ public class GameLoop {
 						context.setNextState("MAIN_MENU");
 					} else {
 						Menu.printStandardFrame(SystemMessages.ERR_QUANTITY_FIGHTERS);
+						context.setNextState("HUB");
 						break;
 					}
 					break;
