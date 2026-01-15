@@ -6,15 +6,12 @@ A structured console-based RPG developed in Java, emphasizing clean separation o
 
 The application is organized into specialized packages to ensure maintainability:
 
-arena/
-├── core/                # Game orchestration and loop management
-├── logic/               # Core battle mechanics, state (GameContext), and AI
-├── characters/          # OOP Hierarchy (Mage, Warrior, Assassin)
-├── config/              # Static constants, game settings, and text templates
-├── ui/                  # View layer (frame rendering)
-├── helpers/             # Utility classes (Input, Random, Delays)
-├── dialogs/             # Localization and system messages
-└── system/              # Persistence (Save/Load)
+* **`core/`**: Orchestrates the game flow. Includes `GameLoop` for state navigation and `FightLoop` for battle sequence management.
+* **`logic/`**: Contains the "brain" of the game, including AI decision-making (`BotIntelect`), combat state management (`GameContext`), and round calculations.
+* **`characters/`**: Implements the class hierarchy (Mage, Warrior, Assassin) using inheritance and specialized skill sets.
+* **`config/`**: Centralized constants for game balance, menu UI strings, and system paths.
+* **`ui/` & `dialogs/`**: Dedicated layers for rendering frames, slow-print narration, and system messaging.
+* **`helpers/`**: Utility layer for robust input handling, randomization, and console effects.
 
 ## ⚙️ Technical Highlights
 
