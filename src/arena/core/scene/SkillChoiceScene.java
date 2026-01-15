@@ -25,9 +25,9 @@ public class SkillChoiceScene {
 			return answer;
 		} else {
 			int answer = BotIntelect.botIntelect(character, character1);
+			System.out.println("==================== "+ answer +" =====================");
 			Pauses.waitForContinue(scan);
 			ClearConsole.clearConsole();
-			System.out.println("==================== "+ answer +" =====================");
 			return answer;
 		}
 	}

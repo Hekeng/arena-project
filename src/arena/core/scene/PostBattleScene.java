@@ -57,6 +57,7 @@ public class PostBattleScene {
 
 		AfterBattleHeal.healthHeal(loser);
 		list.remove(loser);
+		list.remove(winner);
 		ClearConsole.clearConsole();
 	}
 }

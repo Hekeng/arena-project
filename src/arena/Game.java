@@ -13,7 +13,7 @@ public class Game {
 		System.out.println("TEST RUN V0.3");
 		Scanner inputScanner = new Scanner(System.in);
 		ArrayList<Character> characterList = new ArrayList<>();
-		GameLoop.startMenu(inputScanner, characterList);
+		GameLoop.start(inputScanner, characterList);
 		inputScanner.close();
 
 	}

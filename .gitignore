@@ -1,0 +1,9 @@
+
+*.class
+bin/
+out/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+/saves/*.dat

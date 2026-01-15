@@ -142,7 +142,7 @@ public static String[] getAfterRoundStatus(Character atk, Character def, RoundRe
 	}
 
 	// Секция Яда
-	if (atk.getPoisonValue() > 0 || def.getPoisonValue() > 0) {
+	if (result.atkPoisonDmg > 0 || result.defPoisonDmg > 0) {
 
 		lines.add("================== POISON ==================");
 		if (atk.getPoisonValue() > 0) {

@@ -42,50 +42,56 @@ public class BattleController {
 
 		int atkResourceChange = intentAtk.selfResourceChange;
 		int defResourceChange = intentDef.selfResourceChange;
+		int atkTargetResChange = intentAtk.targetResourceChange;
+		int defTargetResChange = intentDef.targetResourceChange;
+
+		//доты
+		int actualAtkPoisonDmg = 0;
+		int actualDefPoisonDmg = 0;
 		//сжигаем ресурсы врага
 		boolean defResponded;
 		if (intentAtk.targetResourceChange != 0) {
 			this.defender.changeMyResource(intentAtk.targetResourceChange);
 		}
-
 		if (intentDef.targetResourceChange != 0) {
 			this.attacker.changeMyResource(intentDef.targetResourceChange);
 		}
 		// 3. Применяем последствия демедж
+		this.attacker.changeMyResource(atkResourceChange);
 		this.defender.takeDamage(damageToDef);
 
-		if (intentAtk.dotDamage > 0) {
+		if (intentAtk.dotDamage > 0 && intentDef.defenseMod == 1.0) {
 			this.defender.addPoison(intentAtk.dotDamage);
 		}
-		if (intentDef.dotDamage > 0) {
-			this.attacker.addPoison(intentDef.dotDamage);
-		}
-		
+
 		if (defender.getIsAlive()) {
-			this.attacker.changeMyResource(atkResourceChange);
 			defResponded = true;
 			this.attacker.takeDamage(damageToAtk);
+			if (intentDef.dotDamage > 0 && intentAtk.defenseMod == 1.0) {
+				this.attacker.addPoison(intentDef.dotDamage);
+			}
 			this.defender.changeMyResource(defResourceChange);
 		} else {
-			this.attacker.changeMyResource(atkResourceChange);
 			defResponded = false;
 			damageToAtk = 0;
 			defResourceChange = 0;
 
 		}
-		if (this.defender.getIsAlive() && this.defender.getPoisonValue() > 0) {
-			this.defender.takeDamage(this.defender.getPoisonValue());
-		}
-		if (this.attacker.getIsAlive() && this.attacker.getPoisonValue() > 0) {
-			this.attacker.takeDamage(this.attacker.getPoisonValue());
-		}
-		int atkTargetResChange = intentAtk.targetResourceChange;
-		int defTargetResChange = intentDef.targetResourceChange;
 
-		int atkPoisonDmg = this.attacker.getPoisonValue();
-		int defPoisonDmg = this.defender.getPoisonValue();
-		
-		return new RoundResult(intentAtk.message, rawAttackerDmg, damageToDef, atkResourceChange, atkPoisonDmg, atkTargetResChange, intentDef.message, rawDefenderDmg, damageToAtk, defResourceChange, defPoisonDmg, defTargetResChange, defResponded);
+		if (this.defender.getIsAlive() && this.defender.getPoisonValue() > 0) {
+			// Сохраняем сколько яда СЕЙЧАС сработает
+			actualDefPoisonDmg = this.defender.getPoisonValue();
+			this.defender.takeDamage(actualDefPoisonDmg);
+		}
+
+		// 3. Логика яда для Атакующего (только если Защитник не убил его своим ядом раньше)
+		if (this.defender.getIsAlive() && this.attacker.getIsAlive() && this.attacker.getPoisonValue() > 0) {
+			// Сохраняем сколько яда СЕЙЧАС сработает
+			actualAtkPoisonDmg = this.attacker.getPoisonValue();
+			this.attacker.takeDamage(actualAtkPoisonDmg);
+		}
+
+		return new RoundResult(intentAtk.message, rawAttackerDmg, damageToDef, atkResourceChange, actualAtkPoisonDmg, atkTargetResChange, intentDef.message, rawDefenderDmg, damageToAtk, defResourceChange, actualDefPoisonDmg, defTargetResChange, defResponded);
 	}
 
 		public void changeRolls() {
