@@ -10,7 +10,6 @@ public class Mage extends Character{
 	public Mage(String name, int health, int mana) {
 
 		super(name, health);
-		// 2. Инициализация своего собственного поля
 		this.mana = mana;
 	}
 
@@ -70,7 +69,7 @@ public class Mage extends Character{
 		if (this.mana >= FightClassesConfig.BASE_MAGE_SPELL_COST) {
 		intent.defenseMod = 0.1;
 		intent.selfResourceChange -= FightClassesConfig.BASE_MAGE_SPELL_COST * 2;
-		intent.message = "cast power schield";
+		intent.message = "cast power shield";
 		} else {
 			intent.message = "The loser was left without Mana";
 		}

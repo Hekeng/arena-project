@@ -1,9 +1,7 @@
 package arena.helpers;
 
 import java.util.Scanner;
-
 import arena.ui.Menu;
-
 import arena.dialogs.SystemMessages;
 
 public class UnInputInt {
@@ -37,14 +35,14 @@ public class UnInputInt {
 		}
 	}
 	public static int numericInput (Scanner inputScanner) {
-		int analizAingabe;
+		int analiseInput;
 		while (!inputScanner.hasNextInt()) {
 			System.out.println("Error: Incorrect input. Please try again ():");
 			inputScanner.nextLine();
 		}
-		analizAingabe = inputScanner.nextInt();
+		analiseInput = inputScanner.nextInt();
 		inputScanner.nextLine();
-		return analizAingabe;
+		return analiseInput;
 	}
 	public static String [] menuSimplification(String[] currentMenu){
 
@@ -61,8 +59,7 @@ public class UnInputInt {
 			}
 		}
 		return validOptions;
-
-
+		
 	}
 
 

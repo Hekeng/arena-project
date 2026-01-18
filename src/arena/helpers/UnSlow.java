@@ -6,7 +6,7 @@ public class UnSlow {
 			Thread.sleep(delayMilliseconds);
 		}
 		catch (InterruptedException e) {
-			// B учебных целях, мы можем проигнорировать
+			//
 		}
 	}
 }

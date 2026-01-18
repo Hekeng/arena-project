@@ -25,7 +25,7 @@ public class LoadManager {
 	
 	public static String[] getSavedHeroesListDetailed() {
 		ArrayList<String> menuRows = new ArrayList<>();
-		File[] files = getOnlyDatFiles(); // Используем наш новый метод
+		File[] files = getOnlyDatFiles();
 		
 		for (File currentFile : files) {
 			try {
@@ -47,7 +47,7 @@ public class LoadManager {
 	}
 	
 	public static Character loadCharacter(int choice) {
-		File[] files = getOnlyDatFiles(); // Используем ТОТ ЖЕ самый список
+		File[] files = getOnlyDatFiles();
 		
 		if (choice <= 0 || choice > files.length) return null;
 		

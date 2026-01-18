@@ -19,6 +19,7 @@ import arena.helpers.ClearConsole;
 import arena.helpers.UnInputInt;
 import arena.helpers.UnInputStr;
 
+import arena.logic.TextMessageProvider;
 import arena.logic.Validation;
 import arena.logic.GameContext;
 import arena.ui.Menu;
@@ -28,76 +29,70 @@ public class GameLoop {
 	public static void start(Scanner scan, ArrayList<Character> list) {
 
 		GameContext context = new GameContext();
-		while (!context.getNextState().equals("EXIT")) {
+		
+		while (context.getNextState() != GameContext.GameState.EXIT) {
 			switch (context.getNextState()) {
-				case "MAIN_MENU":
+				case MAIN_MENU:
 					startMenu(scan, context);
 					break;
-				case "AI_CHOICE":
+				case AI_CHOICE:
 					chooseClassMenu(scan, context);
-					//aiChoose_class(scan, list);
 					break;
-				case "HUB":
+				case HUB:
 					hubMenu(scan, context);
 					break;
-				case "CHOICE_CLASS":
+				case CHOICE_CLASS:
 					chooseClassMenu(scan, context);
 					break;
-				case "CLASS_PREVIEW":
+				case CLASS_PREVIEW:
 					classPreviewMenu(scan, context);
 					break;
-				case "ENTER_NAME":
-					while (true) {
-						enterNameMenu(scan, context);
-						if (!Validation.characterNameValid(list, context.getPendingName())) {
-							continue;
-						}
-						context.setNextState("CREATE_CHARACTER");
-						break;
+				case ENTER_NAME:
+					enterNameMenu(scan, context);
+					if (Validation.characterNameValid(list, context.getPendingName())) {
+						context.setNextState(GameContext.GameState.CREATE_CHARACTER);
 					}
 					break;
 
-				case "CREATE_CHARACTER":
+				case CREATE_CHARACTER:
 					Character newCharacter = CreateCharacters.CreateCharacter(context.getSelectedClassId(), context.getPendingName());
 					if (context.getIsAiGame()){
 						newCharacter.setisAi(true);
 					}
 					list.add(newCharacter);
 					context.setIsAiGame(false);
-					context.setNextState("HUB");
-					context.setPendingName("");
-					context.setSelectedClassId(-1);
+					context.setNextState(GameContext.GameState.HUB);
+					context.setPendingName(null);
+					context.setSelectedClassId(null);
 					break;
 
-				case "SHOW_DUELIST":
+				case SHOW_DUELIST:
 					if (list.isEmpty()) {
 						Menu.printStandardFrame(SystemMessages.ERR_EMPTY_PARTY);
 						continue;
 					} else {
 						for (Character c : list) {
 							ClearConsole.clearConsole();
-							Menu.printStandardFrame(FightClassesConfig.buildHeroCard(c, 3));
+							Menu.printStandardFrame(TextMessageProvider.buildHeroCard(c, 3));
 							Pauses.waitForContinue(scan);
 						}
 					}
-					context.setNextState("HUB");
+					context.setNextState(GameContext.GameState.HUB);
 					break;
 
-				case "FIGHT":
+				case FIGHT:
 					if (Validation.quantityFightersValid(list, FightMenuConfig.MIN_FIGHTERS_QUANTITY)) {
 						FightLoop.startFight(list, scan);
-						context.setNextState("MAIN_MENU");
+						context.setNextState(GameContext.GameState.MAIN_MENU);
 					} else {
 						Menu.printStandardFrame(SystemMessages.ERR_QUANTITY_FIGHTERS);
-						context.setNextState("HUB");
+						context.setNextState(GameContext.GameState.HUB);
 						break;
 					}
 					break;
-
-
-				case "LOAD_MENU":
+				case LOAD_MENU:
 					loadMenu(scan, list, context);
-
+					break;
 				default:
 					break;
 			}
@@ -111,14 +106,14 @@ public class GameLoop {
 			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_START_MENU);
 			switch (menuChoice) {
 				case 1:
-					context.setNextState("CHOICE_CLASS");
+					context.setNextState(GameContext.GameState.CHOICE_CLASS);
 					context.setIsAiGame(true);
 					break;
 				case 2:
-					context.setNextState("HUB");
+					context.setNextState(GameContext.GameState.HUB);
 					break;
 				case 0:
-					context.setNextState("EXIT");
+					context.setNextState(GameContext.GameState.EXIT);
 					break;
 				default:
 					break;
@@ -126,7 +121,6 @@ public class GameLoop {
 
 	}
 	public static void aiChoose_class (Scanner scan, GameContext context){
-
 			switch (context.getSelectedClassId()) {
 				case 1:
 					context.setPendingName("BOT_Mage");
@@ -137,40 +131,33 @@ public class GameLoop {
 				case 3:
 					context.setPendingName("BOT_Assassin");
 					break;
-
 				default:
 					break;
 			}
-
 	}
-
-
-
-
+	
 	public static void hubMenu(Scanner scan, GameContext context){
-
 			Menu.printStandardFrame(MenuConfig.MENU_HUB_MENU);
 			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_HUB_MENU);
 			switch (menuChoice) {
 				case 1:
-					context.setNextState("CHOICE_CLASS");
+					context.setNextState(GameContext.GameState.CHOICE_CLASS);
 					break;
 				case 2:
-					context.setNextState("LOAD_MENU");
+					context.setNextState(GameContext.GameState.LOAD_MENU);
 					break;
 				case 3:
-					context.setNextState("SHOW_DUELIST");
+					context.setNextState(GameContext.GameState.SHOW_DUELIST);
 					break;
 				case 9:
-					context.setNextState("FIGHT");
+					context.setNextState(GameContext.GameState.FIGHT);
 					break;
 				case 0:
-					context.setNextState("MAIN_MENU");
+					context.setNextState(GameContext.GameState.MAIN_MENU);
 					break;
 				default:
 					break;
 			}
-
 	}
 
 	public static void chooseClassMenu(Scanner scan, GameContext context){
@@ -179,18 +166,17 @@ public class GameLoop {
 			context.setSelectedClassId(UnInputInt.numericInput(scan, MenuConfig.MENU_CHOOSE_CLASS));
 			switch (context.getSelectedClassId()) {
 				case 1, 2 , 3:
-					context.setNextState("CLASS_PREVIEW");
+					context.setNextState(GameContext.GameState.CLASS_PREVIEW);
 					break;
 				case 0:
 					if (context.getIsAiGame()){
-						context.setNextState("MAIN_MENU");
-						context.setSelectedClassId(-1);
+						context.setNextState(GameContext.GameState.MAIN_MENU);
+						context.setSelectedClassId(null);
 						context.setIsAiGame(false);
 					} else {
-						context.setNextState("HUB");
-						context.setSelectedClassId(-1);
+						context.setNextState(GameContext.GameState.HUB);
+						context.setSelectedClassId(null);
 					}
-
 					break;
 				default:
 					break;
@@ -198,25 +184,25 @@ public class GameLoop {
 	}
 
 	public static void classPreviewMenu(Scanner scan,GameContext context){
-			Menu.printStandardFrame(FightClassesConfig.buildHeroCard(CreateCharacters.createPreviewHero(context.getSelectedClassId()), 1));
+			Menu.printStandardFrame(TextMessageProvider.buildHeroCard(CreateCharacters.createPreviewHero(context.getSelectedClassId()), 1));
 			Menu.printStandardFrame(MenuConfig.MENU_CLASS_PREVIEW);
 			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.MENU_CLASS_PREVIEW);
 			switch (menuChoice) {
 				case 1:
 					if(!context.getIsAiGame()){
-					context.setNextState("ENTER_NAME");
+					context.setNextState(GameContext.GameState.ENTER_NAME);
 					break;
 					} else {
 						aiChoose_class (scan, context);
-						context.setNextState("CREATE_CHARACTER");
+						context.setNextState(GameContext.GameState.CREATE_CHARACTER);
 					}
 					break;
 				case 0:
 					if (context.getIsAiGame()){
-						context.setNextState("CHOICE_CLASS");
+						context.setNextState(GameContext.GameState.CHOICE_CLASS);
 						context.setSelectedClassId(-1);
 					} else {
-					context.setNextState("HUB");
+					context.setNextState(GameContext.GameState.HUB);
 					context.setSelectedClassId(-1);}
 					break;
 				default:
@@ -224,7 +210,6 @@ public class GameLoop {
 			}
 	}
 	public static void enterNameMenu(Scanner scan, GameContext context) {
-
 		Menu.printStandardFrame(MenuConfig.MENU_ENTER_NAME);
 		context.setPendingName(UnInputStr.StringInput(scan));
 
@@ -232,12 +217,11 @@ public class GameLoop {
 	}
 
 	public static void loadMenu (Scanner scan, ArrayList<Character> list, GameContext context) {
-
 		if (list.size() < FightMenuConfig.MIN_FIGHTERS_QUANTITY) {
-			Menu.printStandardFrame(MenuConfig.buildHallOfFameMenu());
-			int menuChoice = UnInputInt.numericInput(scan, MenuConfig.buildHallOfFameMenu());
+			Menu.printStandardFrame(TextMessageProvider.buildHallOfFameMenu());
+			int menuChoice = UnInputInt.numericInput(scan, TextMessageProvider.buildHallOfFameMenu());
 			if (menuChoice == 0) {
-				context.setNextState("HUB");
+				context.setNextState(GameContext.GameState.HUB);
 				return;
 			}
 			Character newHero = LoadManager.loadCharacter(menuChoice);
@@ -245,27 +229,25 @@ public class GameLoop {
 				if (Validation.isNameInParty(list, newHero.getName())) {
 					Menu.printStandardFrame(SystemMessages.ERR_CHAR_EXIST);
 					Pauses.waitForContinue(scan);
-					context.setNextState("HUB");
+					context.setNextState(GameContext.GameState.HUB);
 					return;
 				} else {
 					list.add(newHero);
 					System.out.println("Hero " + newHero.getName() + " successfully joined the party!");
 					Pauses.waitForContinue(scan);
-					context.setNextState("HUB");
+					context.setNextState(GameContext.GameState.HUB);
 					return;
 				}
-
 			} else {
 				Menu.printStandardFrame(SystemMessages.ERR_EMPTY_PARTY);
-				context.setNextState("HUB");
+				context.setNextState(GameContext.GameState.HUB);
 				return;
 			}
 
 		} else {
-			// Если в отряде уже максимум бойцов, выводим сообщение и уходим
 			Menu.printStandardFrame(SystemMessages.ERR_PARTY_FULL);
 			Pauses.waitForContinue(scan);
-			context.setNextState("HUB");
+			context.setNextState(GameContext.GameState.HUB);
 			return;
 		}
 	}

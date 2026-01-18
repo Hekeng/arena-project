@@ -1,18 +1,14 @@
 package arena.logic;
 
 import arena.characters.Character;
-import arena.config.MenuConfig;
-import arena.core.system.SaveManager;
+
 import arena.dialogs.SystemMessages;
-import arena.helpers.UnInputInt;
-import arena.helpers.UnInputStr;
-import arena.helpers.UnSlow;
+
 import arena.ui.Menu;
 
 import arena.config.SystemConfig;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import java.io.*;
 
@@ -50,7 +46,6 @@ public class Validation {
 		return file.exists();
 	}
 	public static boolean isNameTaken(String inputName) {
-		// 1. Формируем путь к потенциальному файлу (только имя + расширение)
 		String filePath = SystemConfig.SAVE_PATH + inputName + ".dat";
 		File file = new File(filePath);
 		return file.exists();

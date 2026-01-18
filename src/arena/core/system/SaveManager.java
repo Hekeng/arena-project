@@ -8,7 +8,7 @@ import java.io.*;
 public class SaveManager {
 	
 	public static void saveCharacter(Character winner) {
-		// 1. Сначала позаботимся о папке
+
 		File directory = new File(SystemConfig.SAVE_PATH);
 		if (!directory.exists()) {
 			directory.mkdir();

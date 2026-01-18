@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SystemMessages {
-	private SystemMessages(){};
+
 	public static final String PRESS_ENTER = "====== Press [ENTER] to continue... ========";
 
 	public static final String[] ERR_NOT_A_NUMBER = {
@@ -57,9 +57,7 @@ public class SystemMessages {
 			"============== Party is full! =============="
 	};
 
-//	public static final String[] SYSTEM_MESSAGES = {
-//			"=======Press [ENTER] to continue...=========",
-//	};
+
 	public static String [] failInputMessage(String [] validOptions, int analiseInput){
 		List<String> lines = new ArrayList<>();
 		

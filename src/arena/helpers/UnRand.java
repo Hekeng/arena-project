@@ -12,7 +12,6 @@ public class UnRand {
 			min = max;
 			max = temp;
 		}
-		// Используем наш единственный внутренний RANDOM
 		return RANDOM.nextInt(max - min + 1) + min;
 	}
 }

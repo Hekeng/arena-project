@@ -1,11 +1,5 @@
 package arena.config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import arena.characters.Character;
-
 public class FightClassesConfig {
 	private FightClassesConfig(){}
 
@@ -18,7 +12,6 @@ public class FightClassesConfig {
 	public static final int BASE_MIN_MAGE_DMG = 22;
 	public static final int BASE_MAX_MAGE_DMG = 35;
 	public static final int BASE_MAGE_SPELL_COST = 10;
-	public static final int MIN_MAGE_SKILL_COST = 5;
 
 	//WARRIOR:
 	public static final int BASE_WARRIOR_HP = 100;
@@ -37,38 +30,6 @@ public class FightClassesConfig {
 	public static final int BASE_MAX_ASSASSIN_DMG = 18;
 	public static final int BASE_ASSASSIN_SKILL_COST = 15;
 	public static final int MIN_ASSASSIN_SKILL_COST = 5;
-
-
-	public static String[] buildHeroCard(Character fighter, int mode) {
-		List<String> allLines = new ArrayList<>();
-
-		switch (mode) {
-			case 1: // Выбор героя: История + Скиллы
-				allLines.add("============== CLASS PREVIEW ===============");
-				allLines.add("=============  YOUR CHAMPION ===============");
-				allLines.addAll(Arrays.asList(fighter.getHistoryInfo()));
-				allLines.add("============================================");
-				allLines.addAll(Arrays.asList(fighter.getClassDescription()));
-				break;
-
-			case 2: // Перед боем: Личное + Скиллы + История
-				allLines.add("======= Fighters meet in the arena =========");
-				allLines.add("=============  YOUR CHAMPION ===============");
-				allLines.addAll(Arrays.asList(fighter.getPersonalInfo()));
-				allLines.add("============================================");
-				allLines.addAll(Arrays.asList(fighter.getClassDescription()));
-				allLines.add("============================================");
-				allLines.addAll(Arrays.asList(fighter.getHistoryInfo()));
-				break;
-
-			case 3: // Только статы
-				allLines.add("=============== ARENA EVENT ================");
-				allLines.add("=============  YOUR CHAMPION ===============");
-				allLines.addAll(Arrays.asList(fighter.getPersonalInfo()));
-				break;
-		}
-
-		return allLines.toArray(new String[0]);
-	}
+	
 	
 }

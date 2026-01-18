@@ -5,9 +5,8 @@ import java.util.Scanner;
 import arena.logic.BattleController;
 import arena.logic.RoundResult;
 
+import arena.logic.TextMessageProvider;
 import arena.ui.Menu;
-
-import arena.config.FightMenuConfig;
 
 import arena.helpers.ClearConsole;
 import arena.helpers.UnRand;
@@ -20,7 +19,6 @@ public class BattleScene {
 		boolean eventCooldown = false;
 		while (battle.getAttacker().getIsAlive() && battle.getDefender().getIsAlive()) {
 
-			//антураж боя
 			if (!eventCooldown && UnRand.randomNumber(1, 5) == 1) {
 
 				ClearConsole.clearConsole();
@@ -30,7 +28,7 @@ public class BattleScene {
 				ClearConsole.clearConsole();
 				eventCooldown = true;
 			} else {
-				eventCooldown = false; // шанс на событие в следующем раунде
+				eventCooldown = false;
 			}
 
 			int atkChoice = SkillChoiceScene.skillChoose(battle.getAttacker(), battle.getDefender(), scan);
@@ -39,7 +37,7 @@ public class BattleScene {
 			
 			RoundResult result = battle.executeRound(atkChoice, defChoice);
 			
-			String[] fightResultMessage = FightMenuConfig.getAfterRoundStatus(battle.getAttacker(), battle.getDefender(), result
+			String[] fightResultMessage = TextMessageProvider.getAfterRoundStatus(battle.getAttacker(), battle.getDefender(), result
 			);
 			
 			Menu.printStandardFrame(fightResultMessage);

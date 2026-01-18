@@ -1,46 +1,36 @@
 package arena.characters;
 
-import java.util.ArrayList;
-
-import arena.characters.Character;
 import arena.config.FightClassesConfig;
 
-
 public class CreateCharacters {
-	public static Character CreateCharacter(int userChose, String charName){
+	
+	public static Character CreateCharacter(Integer userChose, String charName) {
+		if (userChose == null) return null;
 		
-		Character newCharacter = null;;
-		switch (userChose) {
-			case 1:
-				System.out.println("You created Mage!" );
-				newCharacter = new Mage(charName, FightClassesConfig.BASE_MAGE_HP, FightClassesConfig.BASE_MAGE_RES);
-				break;
-			case 2:
-				System.out.println("You created Warrior!" );
-				newCharacter = new Warrior(charName, FightClassesConfig.BASE_WARRIOR_HP, FightClassesConfig.BASE_WARRIOR_RES);
-				break;
-
-			case 3:
-				System.out.println("You created Assassin!" );
-				newCharacter = new Assassin(charName, FightClassesConfig.BASE_ASSASSIN_HP, FightClassesConfig.BASE_ASSASSIN_RES);
-				break;
-			default:
-
-				break;
+		Character newCharacter = instantiateHero(userChose, charName);
+		
+		if (newCharacter != null) {
+			System.out.println("You created " + newCharacter.getClass().getSimpleName() + "!");
 		}
 		return newCharacter;
-
 	}
-
-	public static Character createPreviewHero (int classChoice){
-		Character tempGhost;
-		if (classChoice == FightClassesConfig.CLASS_ID_MAGE) {
-			tempGhost = new Mage("Preview", FightClassesConfig.BASE_CHARACTERS_HP, FightClassesConfig.BASE_MAGE_RES);
-		} else if (classChoice == FightClassesConfig.CLASS_ID_WARRIOR){
-			tempGhost = new Warrior("Preview", FightClassesConfig.BASE_CHARACTERS_HP, FightClassesConfig.BASE_WARRIOR_RES);
-		} else {
-			tempGhost = new Assassin("Preview", FightClassesConfig.BASE_CHARACTERS_HP, FightClassesConfig.BASE_ASSASSIN_RES);
-		}
-		return tempGhost;
+	
+	public static Character createPreviewHero(Integer classChoice) {
+		return instantiateHero(classChoice, "Preview");
 	}
+	
+	private static Character instantiateHero(Integer classChoice, String name) {
+		if (classChoice == null) return null;
+		
+		return switch (classChoice) {
+			case 1 -> new Mage(name, FightClassesConfig.BASE_MAGE_HP, FightClassesConfig.BASE_MAGE_RES);
+			case 2 -> new Warrior(name, FightClassesConfig.BASE_WARRIOR_HP, FightClassesConfig.BASE_WARRIOR_RES);
+			case 3 -> new Assassin(name, FightClassesConfig.BASE_ASSASSIN_HP, FightClassesConfig.BASE_ASSASSIN_RES);
+			default -> {
+				System.out.println("Something went wrong with class ID: " + classChoice);
+				yield null;
+			}
+		};
+	}
+	
 }

@@ -9,9 +9,8 @@ import arena.logic.CombatIntent;
 
 
 public class Warrior extends Character implements Serializable {
-	private int rage; // Новое, уникальное поле
+	private int rage;
 
-	// Конструктор Warrior
 	public Warrior(String name, int health, int rage) {
 
 		super(name, health);

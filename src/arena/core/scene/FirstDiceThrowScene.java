@@ -4,7 +4,6 @@ import arena.characters.Character;
 import arena.logic.BattleController;
 import arena.logic.FightersDiceThrow;
 import arena.ui.Menu;
-import arena.core.scene.Pauses;
 import java.util.ArrayList;
 import java.util.Scanner;
 

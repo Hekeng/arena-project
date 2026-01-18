@@ -1,14 +1,14 @@
 package arena.logic;
 
 public class CombatIntent {
-	// Влияние на здоровье
-	public int damageValue = 0;
-	public double defenseMod = 1.0;
+
+	public Integer damageValue = null;
+	public Double defenseMod = 1.0;
 	
-	// Влияние на ресурсы (абстрактное)
-	public int selfResourceChange = 0;   // Мой ресурс (мана/ярость)
-	public int targetResourceChange = 0; // Ресурс врага
-	public int dotDamage = 0;
-	// Информационное поле
-	public String message = "";
+
+	public Integer selfResourceChange =  null;
+	public Integer targetResourceChange =  null;
+	public Integer dotDamage =  null;
+
+	public String message = null;
 }

@@ -17,15 +17,15 @@ public class Assassin extends Character{
 		public int getStamina(){
 			return this.stamina;
 		}
-	@Override
-	public  int getMaxHealth(){
-		return FightClassesConfig.BASE_ASSASSIN_HP;
-	}
 		@Override
-		public int getResourceValue(){
-			int resourceValue = getStamina();
-			return resourceValue;
+		public  int getMaxHealth(){
+			return FightClassesConfig.BASE_ASSASSIN_HP;
 		}
+			@Override
+			public int getResourceValue(){
+				int resourceValue = getStamina();
+				return resourceValue;
+			}
 		@Override
 		public String getResourceName(){
 			return "Stamina";

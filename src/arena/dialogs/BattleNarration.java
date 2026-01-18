@@ -8,9 +8,7 @@ import arena.helpers.UnRand;
 import arena.characters.Character;
 public class BattleNarration {
 	
-	private BattleNarration(){};
-	
-	public static final String [] FIRST_SCENA_DIALOGE = {
+	public static final String [] FIRST_SCENA_DIALOGUE = {
 		"=============== ARENA EVENT ================",
 		"================== CROWD ===================",
 		"The arena falls silent...",
@@ -28,35 +26,20 @@ public class BattleNarration {
 	};
 
 	public static String [] getRandomArenaEvent(Character atk, Character def) {
-		int type = UnRand.randomNumber(1, 3); // Выбираем тип события
-
+		int type = UnRand.randomNumber(1, 3);
 		List<String> arenaContext = new ArrayList<>();
-
 		arenaContext.add("=============== ARENA EVENT ================");
-
-
 		String eventPhrase = switch (type) {
 			case 1 -> ARENA_PHRASES[UnRand.randomNumber(0, ARENA_PHRASES.length - 1)];
 			case 2 -> "The crowd roars: 'Go, " + atk.getName() + "! Crush them!'";
 			case 3 -> "Boos and whistles erupt as " + def.getName() + " stumbles!";
 			default -> "The drums beat faster, anticipating blood...";
 		};
-
 		arenaContext.add(eventPhrase);
-
-
-
+		
 		return arenaContext.toArray(new String[0]);
 	}
-
-	public static final String[] BATTLE_FINALE = {
-			"=============== ARENA EVENT ================",
-			"============= VICTORY ACHIEVED =============",
-			"[... The dust settles over the arena sand ...]",
-			"The roar of the crowd fades into a tensed silence.",
-			"The referee approaches the fallen fighter and shakes his head..."
-	};
-	// Тексты для панихиды (Loser)
+	
 	public static final String[] DEATH_TRIBUTE = {
 			"=============== ARENA EVENT ================",
 			"============== REST IN PEACE ===============",
@@ -65,7 +48,6 @@ public class BattleNarration {
 			"Silence falls as the crowd acknowledges the loss."
 	};
 
-	// Тексты для поздравления (Winner)
 	public static final String[] VICTORY_SHOUTS = {
 			"=============== ARENA EVENT ================",
 			"============ VICTORY ACHIEVED ==============",
@@ -74,28 +56,12 @@ public class BattleNarration {
 			"The legendary hero has claimed another soul for the Arena!"
 	};
 
-	// Тексты для лечения
+
 	public static final String[] RECOVERY_LOG = {
 			"=============== ARENA EVENT ================",
 			"============ RECOVERY AND REST =============",
 			"Priests of the Hexen Order bless the survivor.",
 			"Wounds are being tended, energy is being restored."
 	};
-//	Rolling the dice...
-//			.
-//			..
-//			...
-
-
-//	The Arena Judge raises his hand...
-//	The dice is thrown!
-//
-//	Mage: 4
-//	Warrior: 2
-//
-//	The crowd roars!
-//	Mage takes the first move!
-
-
 
 }

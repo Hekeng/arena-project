@@ -62,15 +62,12 @@ public abstract class Character implements Serializable {
 	public abstract String[] getHistoryInfo();
 	public void takeDamage(int amount) {
 
-		this.health = this.health - amount; // или this.health -= amount;
-
-		// 2. Проверяем, умер ли персонаж
+		this.health = this.health - amount;
 		if (this.health <= 0) {
-			this.health = 0;         // Гарантируем, что здоровье не станет отрицательным
-			this.isAlive = false;    // Меняем состояние напрямую
-			System.out.println(this.getName() + " has fallen.");//для тестов удалить когда закончу.
+			this.health = 0;
+			this.isAlive = false;
+			System.out.println(this.getName() + " has fallen.");
 		}
-		// Логика работы с полями объекта (например, this.health)
 	}
 
 	public abstract int getResourceValue();
@@ -99,35 +96,9 @@ public abstract class Character implements Serializable {
 			case 1: return attack();
 			case 2: return defend();
 			case 3: return special();
-			default: return new CombatIntent(); // Сделать свитч тут....
+			default: return new CombatIntent();
 		}
 	}
-	public void die() {
-		// 1. Условие: если isAlive уже false (персонаж мертв)
-		if (this.health == 0 || this.isAlive == false) {
-			throw new IllegalStateException("Character is already dead.");
-		}
-		this.isAlive = false;
-		System.out.println(this.getName() + " has fallen.");
-	}
-
-// это костыль:
-//	@Override
-//	public String toString() {
-//		// 1. Начинаем строку
-//		String result = "Hero: " + name + " | ";
-//
-//		result = result + "Class: " + this.getClass().getSimpleName() + " | ";
-//		result = result + "Health: " + health + " | ";
-//
-//		if (isAlive) {
-//			result = result + "Live" + " | \n";
-//		} else {
-//			result = result + "Dead" + " | \n";
-//		}
-//
-//		return result;
-//	}
 
 }
 

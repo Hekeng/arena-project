@@ -9,28 +9,28 @@ import arena.dialogs.SystemMessages;
 public class UnInputStr {
 	public static String StringInput(Scanner inputScanner) {
 		
-		String analizAingabe = "";
+		String analiseinput = null;
 		int ifValid = 0;
 		
 		do {
-			int checkPrufung = 1;
-			analizAingabe = inputScanner.nextLine();
-			//uberprufung lear eingabe
-			if (analizAingabe.trim().isEmpty()) {
+			int checkProof = 1;
+			analiseinput = inputScanner.nextLine();
+
+			if (analiseinput.trim().isEmpty()) {
 				Menu.printStandardFrame(SystemMessages.ERR_STRING_INPUT);
 				ifValid = 0;
 				continue;
 			}
 
-			checkPrufung = 1;
+			checkProof = 1;
 
-			if (checkPrufung == 1) {
+			if (checkProof == 1) {
 				ifValid = 1;
 			}
 			
 			
 		} while (ifValid == 0);
 		
-		return analizAingabe.trim();
+		return analiseinput.trim();
 	}
 }
