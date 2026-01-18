@@ -2,13 +2,13 @@ package arena.logic;
 
 public class CombatIntent {
 
-	public Integer damageValue = null;
-	public Double defenseMod = 1.0;
+	public int damageValue = 0;
+	public double defenseMod = 1.0;
 	
 
-	public Integer selfResourceChange =  null;
-	public Integer targetResourceChange =  null;
-	public Integer dotDamage =  null;
+	public int selfResourceChange =  0;
+	public int targetResourceChange =  0;
+	public int dotDamage =  0;
 
 	public String message = null;
 }
